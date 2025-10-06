@@ -14,7 +14,8 @@ namespace School_Management.Models
         public DateOnly BirthDate { get; set; }
         public string Address { get; set; }
         public Dictionary<string, int> Grades { get; set; }
-        public Student(int Id,string FirstName,string LastName,DateOnly BirthDate,string Address,Dictionary<string,int> Grades)
+
+        public Student(int Id, string FirstName, string LastName, DateOnly BirthDate, string Address, Dictionary<string,int> Grades)
         {
             this.Id = Id;
             this.FirstName = FirstName;
@@ -24,11 +25,12 @@ namespace School_Management.Models
             this.Grades = new Dictionary<string, int>();
         }
 
-        public int getAge()
+        public int GetAge()
         {
             return DateTime.Now.Year - BirthDate.Year;
         }
-        public int getTotalAverage()
+
+        public int GetTotalAverage()
         {
             int total = 0;
             foreach (var grade in Grades)
