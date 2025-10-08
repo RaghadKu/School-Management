@@ -1,4 +1,7 @@
-﻿namespace School_Management
+﻿using School_Management.Models;
+using School_Management.Services;
+
+namespace School_Management
 {
     public class Program
     {
@@ -13,21 +16,24 @@
                     "1. List All Students.\n" +
                     "2. Add New Student.\n" +
                     "3. Find Student By Id\n" +
-                    "4. Assign Grade To Student.\n" +
-                    "5. Generate Last Month's Report.\n" +
-                    "6. Save/Load Data.\n" +
-                    "7. Report With Cancellation\n" +
+                    "4. Delete Student\n" +
+                    "5. Update Student\n" +
+                    "6. Assign Grade To Student.\n" +
+                    "7. Generate Last Month's Report.\n" +
                     "0. Exit");
+
                 Console.Write("Choose An Option: ");
 
                 int.TryParse(Console.ReadLine(), out int choice);
 
                 Console.Clear();
 
+                StudentService studentService = new StudentService();
+
                 switch(choice)
                 {
                     case 1:
-                        Thread.Sleep(1000);
+                        studentService.ListAll();
                         break;
 
                     case 2:

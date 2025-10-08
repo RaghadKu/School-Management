@@ -11,7 +11,7 @@ namespace School_Management.Services
         { 
             try
             {
-                Students = Load("./Assets/StudentsData.json");
+                Students = Load("~/Assets/StudentsData.json");
             }
 
             catch (Exception ex)
