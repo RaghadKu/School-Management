@@ -47,6 +47,7 @@ namespace School_Management.Models
             sb.AppendLine($"First Name : {FirstName}");
             sb.AppendLine($"Last Name : {LastName}");
             sb.AppendLine($"Birth Date : {BirthDate}");
+            sb.AppendLine($"Address : {Address}");
             foreach (var grade in Grades) { sb.AppendLine($"{grade.Key} : {grade.Value}"); }
             return sb.ToString();
         }
