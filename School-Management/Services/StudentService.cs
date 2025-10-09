@@ -10,7 +10,11 @@ namespace School_Management.Services
         
         public StudentService()
         {
-            filePath = Path.Combine(AppContext.BaseDirectory, "Assets", "StudentsData.json");
+            string projectRoot = Directory.GetParent(AppContext.BaseDirectory)
+                              ?.Parent?.Parent?.Parent?.FullName ?? string.Empty;
+
+            filePath = Path.Combine(projectRoot, "Assets", "StudentsData.json");
+
             Students = Load(filePath);
         }
 

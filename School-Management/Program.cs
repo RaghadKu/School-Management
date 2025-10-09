@@ -33,7 +33,7 @@ namespace School_Management
                 switch(choice)
                 {
                     case 1:
-                        Thread.Sleep(1000);
+                        studentService.ListAll();
                         break;
 
                     case 2:
