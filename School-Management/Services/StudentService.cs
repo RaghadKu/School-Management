@@ -6,35 +6,20 @@ namespace School_Management.Services
     public class StudentService
     {
         public List<Student> Students { get; private set; } = new();
+        private string filePath;
         
         public StudentService()
-        { 
-            try
-            {
-                Students = Load("~/Assets/StudentsData.json");
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading students data: {ex.Message}");
-            }
+        {
+            filePath = Path.Combine(AppContext.BaseDirectory, "Assets", "StudentsData.json");
+            Students = Load(filePath);
         }
 
         public void Add(Student student)
         {
             Students.Add(student);
 
-            try
-            {
-                var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
-                Save("./Assets/StudentsData.json", rawJson);
-            }
-
-            catch (Exception ex) 
-            {
-                Console.WriteLine($"Error saving student data: {ex.Message}");
-            }
-
+            var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
+            Save(rawJson);
         }
 
         public void ListAll()
@@ -45,7 +30,7 @@ namespace School_Management.Services
             }
         }
 
-        public Student? Get(int Id)
+        public void Get(int Id)
         {
             Student student = Students.FirstOrDefault(s => s.Id == Id);
 
@@ -57,32 +42,22 @@ namespace School_Management.Services
             {
                 Console.WriteLine("Student not found!");
             }
-
-            return student;
         }
 
-        public void Update(Student Student, int Id)
+        public void Update(Student updatedStudent, int Id)
         {
             var student = Students.FirstOrDefault(s => s.Id == Id);
 
             if (student != null)
             {
-                student.FirstName = Student.FirstName;
-                student.LastName = Student.LastName;
-                student.BirthDate = Student.BirthDate;
-                student.Address = Student.Address;
-                student.Grades = Student.Grades;
+                student.FirstName = updatedStudent.FirstName;
+                student.LastName = updatedStudent.LastName;
+                student.BirthDate = updatedStudent.BirthDate;
+                student.Address = updatedStudent.Address;
+                student.Grades = updatedStudent.Grades;
 
-                try
-                {
-                    var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
-                    Save("./Assets/StudentsData.json", rawJson);
-                }
-
-                catch(Exception ex)
-                {
-                    Console.WriteLine($"Error saving student data: {ex.Message}");
-                }
+                var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
             }
             else
             {
@@ -99,16 +74,9 @@ namespace School_Management.Services
             {
                 Students.Remove(student);
 
-                try
-                {
-                    var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
-                    Save("./Assets/StudentsData.json", rawJson);
-                }
-
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error deleting student {Id} data: {ex.Message}");
-                }
+                var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
+               
             }
             else
             {
@@ -116,9 +84,22 @@ namespace School_Management.Services
             }
         }
 
-        private void Save(string filePath, string rawJson)
+        private void Save(string rawJson)
         {
-            File.WriteAllText(filePath, rawJson);
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("Student data file not found.");
+                    return;
+                }
+
+                File.WriteAllText(filePath, rawJson);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error saving student data: {ex.Message}"); 
+            }
         }
 
         private List<Student> Load(string filePath)
