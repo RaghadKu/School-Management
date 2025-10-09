@@ -22,7 +22,7 @@ namespace School_Management.Models
             this.LastName = LastName;
             this.BirthDate = BirthDate;
             this.Address = Address;
-            this.Grades = new Dictionary<string, int>();
+            this.Grades = Grades;
         }
 
         public int GetAge()
@@ -32,6 +32,8 @@ namespace School_Management.Models
 
         public int GetTotalAverage()
         {
+            if (Grades.Count == 0) return 0;
+
             int total = 0;
             foreach (var grade in Grades)
             {

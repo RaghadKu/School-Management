@@ -24,10 +24,13 @@ namespace School_Management.Services
 
             var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
             Save(rawJson);
+
+            Console.WriteLine("\nAdded Student Successfully!\n");
         }
 
         public void ListAll()
         {
+            Console.WriteLine("\nStudents: \n");
             foreach (var student in Students) 
             { 
                 Console.WriteLine(student.ToString());
@@ -40,6 +43,7 @@ namespace School_Management.Services
 
             if(student != null)
             {
+                Console.WriteLine($"\nStudent {Id}: \n");
                 Console.WriteLine(student.ToString());
             }
             else
@@ -62,6 +66,8 @@ namespace School_Management.Services
 
                 var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
                 Save(rawJson);
+
+                Console.WriteLine("\nStudent Updated Successfully!\n");
             }
             else
             {
@@ -80,7 +86,8 @@ namespace School_Management.Services
 
                 var rawJson = JsonSerializer.Serialize(Students, new JsonSerializerOptions { WriteIndented = true });
                 Save(rawJson);
-               
+
+                Console.WriteLine("\nDeleted Student Successfully!\n");
             }
             else
             {
@@ -115,8 +122,10 @@ namespace School_Management.Services
                     Console.WriteLine("Student data file not found, Starting with empty list.");
                     return new List<Student>();
                 }
-                var StudentsJson = File.OpenRead(filePath);
-                var students = JsonSerializer.Deserialize<List<Student>>(StudentsJson);
+
+
+                using var stream = File.OpenRead(filePath);
+                var students = JsonSerializer.Deserialize<List<Student>>(stream);
 
                 return students ?? new List<Student>();
             }
