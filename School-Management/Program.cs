@@ -10,6 +10,14 @@ namespace School_Management
             bool isWorking = true;
 
             StudentService studentService = new StudentService();
+            TeacherService teacherService = new TeacherService();
+
+            Course maths = new Course(1, "Maths A", []);
+            Course physics = new Course(2, "Physics A", []);
+            Course programming = new Course(3, "Programming A", []);
+            Course philosophy = new Course(4, "Philosophy A", []);
+            Course deutschA1 = new Course(5, "Deutsch A1", []);
+            Course deutschA2 = new Course(6, "Deutsch A2", []);
 
             while (isWorking)
             {
@@ -20,8 +28,14 @@ namespace School_Management
                     "3. Find Student By Id\n" +
                     "4. Delete Student\n" +
                     "5. Update Student\n" +
-                    "6. Assign Grade To Student.\n" +
-                    "7. Generate Last Month's Report.\n" +
+                    "6. List All Teachers.\n" +
+                    "7. Add New Teacher.\n" +
+                    "8. Find Teacher By Id\n" +
+                    "9. Delete Teacher\n" +
+                    "10. Update Teacher\n" +
+                    "11. Assign Grade To Student.\n" +
+                    "12. List All Students By Subject.\n" +
+                    "13. Generate Last Month's Report.\n" +
                     "0. Exit");
 
                 Console.Write("Choose An Option: ");
@@ -42,8 +56,6 @@ namespace School_Management
                         break;
 
                     case 2:
-                        bool isCorrect = true;
-
                         Console.Write("First Name: ");
                         var firstName = Console.ReadLine() ?? string.Empty;
 
@@ -52,13 +64,13 @@ namespace School_Management
 
                         Console.WriteLine("Date of Birth: ");
                         Console.Write("Year: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out int year);
+                        bool isCorrect = int.TryParse(Console.ReadLine(), out int year);
                         Console.Write("Month: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out int month);
+                        bool isCorrectII = int.TryParse(Console.ReadLine(), out int month);
                         Console.Write("Day: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out int day);
+                        bool isCorrectIII = int.TryParse(Console.ReadLine(), out int day);
 
-                        if (!isCorrect) break;
+                        if (!isCorrect || !isCorrectII || !isCorrectIII) break;
 
                         Console.Write("Enter student location: ");
                         var location = Console.ReadLine() ?? string.Empty;
@@ -132,11 +144,66 @@ namespace School_Management
                         break;
 
                     case 6:
-                        Thread.Sleep(1000);
+                        teacherService.ListAll();
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
                         break;
 
                     case 7:
-                        Thread.Sleep(1000);
+                        Console.Write("First Name: ");
+                        var firstNameII = Console.ReadLine() ?? string.Empty;
+
+                        Console.Write("Last Name: ");
+                        var lastNameII = Console.ReadLine() ?? string.Empty;
+
+                        List<Subject> Subjects = [];
+
+                        int counterII = 1;
+                        while (true)
+                        {
+                            Console.Write("Add Subject " + counterII + " Name: ");
+                            var subjectName = Console.ReadLine() ?? string.Empty;
+
+                            if (subjectName == "-1" || subjectName.Equals("")) break;
+
+                            Subjects.Add(new Subject(Subjects.Count, subjectName, maths));
+                            counterII++;
+                        }
+
+                        Teacher teacher = new Teacher(teacherService.Teachers.Count, firstNameII, lastNameII, Subjects);
+                        teacherService.Add(teacher);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 8:
+                        int getIdII = 0;
+                        Console.Write("Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out getIdII);
+                        teacherService.Get(getIdII);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 9:
+                        int deleteIdII = 0;
+                        Console.Write("Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out deleteIdII);
+                        teacherService.Delete(deleteIdII);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
                         break;
 
                     default:

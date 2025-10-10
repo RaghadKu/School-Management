@@ -14,10 +14,11 @@ namespace School_Management.Models
 
         public Course(int Id, string Name, List<Subject> Subjects)
         {
-            Id = Id;
-            Name = Name;
-            Subjects = Subjects;
+            this.Id = Id;
+            this.Name = Name;
+            this.Subjects = Subjects;
         }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

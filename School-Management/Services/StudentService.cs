@@ -6,7 +6,7 @@ namespace School_Management.Services
     public class StudentService
     {
         public List<Student> Students { get; private set; } = new();
-        private string filePath;
+        private readonly string filePath;
         
         public StudentService()
         {
@@ -101,7 +101,7 @@ namespace School_Management.Services
             {
                 if (!File.Exists(filePath))
                 {
-                    Console.WriteLine("Student data file not found.");
+                    Console.WriteLine("Students data file not found.");
                     return;
                 }
 
@@ -109,7 +109,7 @@ namespace School_Management.Services
             }
             catch (Exception ex) 
             {
-                Console.WriteLine($"Error saving student data: {ex.Message}"); 
+                Console.WriteLine($"Error saving students data: {ex.Message}"); 
             }
         }
 
@@ -119,7 +119,7 @@ namespace School_Management.Services
             {
                 if (!File.Exists(filePath))
                 {
-                    Console.WriteLine("Student data file not found, Starting with empty list.");
+                    Console.WriteLine("Students data file not found, Starting with empty list.");
                     return new List<Student>();
                 }
 
@@ -131,7 +131,7 @@ namespace School_Management.Services
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Error loading student data: {ex.Message}");
+                Console.WriteLine($"Error loading students data: {ex.Message}");
                 return new List<Student>();
             }
         }

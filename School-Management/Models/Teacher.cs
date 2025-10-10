@@ -28,11 +28,13 @@ namespace School_Management.Models
             sb.AppendLine($"Teacher Id : {Id}");
             sb.AppendLine($"First Name : {FirstName}");
             sb.AppendLine($"Last Name : {LastName}");
-            foreach (var subject in Subject)
+            foreach (var subject in Subjects)
             {
-                sb.AppendLine($"Subject Id : {subject.Id}");
-                sb.Append($"Subject Name : {subject.Name}");
-                sb.AppendLine($"Course Name : {subject.Course.Name}")
+                sb.AppendLine("{");
+                sb.AppendLine($"   Subject Id : {subject.Id}");
+                sb.AppendLine($"   Subject Name : {subject.Name}");
+                sb.AppendLine($"   Course Name : {subject.Course.Name}");
+                sb.AppendLine("}");
             }
             return sb.ToString();
         }
