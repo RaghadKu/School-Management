@@ -23,6 +23,7 @@ namespace School_Management.Models
             this.BirthDate = BirthDate;
             this.Address = Address;
             this.Grades = Grades;
+
         }
 
         public int GetAge()
