@@ -18,5 +18,17 @@ namespace School_Management.Models
             Name = Name;
             Subjects = Subjects;
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Course Id : {Id}");
+            sb.AppendLine($"Course Name : {Name}");
+            foreach (var subject in Subjects)
+            {
+                sb.AppendLine($"Subject Id : {subject.Id}");
+                sb.AppendLine($"Subject Name : {subject.Name}");
+            }
+            return sb.ToString();
+        }
     }
 }

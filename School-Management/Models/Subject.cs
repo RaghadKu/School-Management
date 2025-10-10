@@ -21,5 +21,15 @@ namespace School_Management.Models
             this.Teacher= Teacher;
 
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Subject Id : {Id}");
+            sb.AppendLine($"Name : {Name}");
+            sb.AppendLine($"Course Name : {Course.Name}");
+            sb.AppendLine($"Teacher Name : {Teacher.Name}");
+            return sb.ToString();
+        }
     }
 }
