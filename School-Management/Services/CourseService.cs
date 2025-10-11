@@ -1,0 +1,181 @@
+﻿using School_Management.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace School_Management.Services
+{
+    class CourseService
+    {
+        public List<Course> Courses { get; private set; } = new();
+        private readonly string filePath;
+
+        public CourseService()
+        {
+            string projectRoot = Directory.GetParent(AppContext.BaseDirectory)
+                              ?.Parent?.Parent?.Parent?.FullName ?? string.Empty;
+
+            filePath = Path.Combine(projectRoot, "Assets", "CoursesData.json");
+
+            Courses = Load(filePath);
+        }
+
+        public void Add(Course course)
+        {
+            Courses.Add(course);
+
+            var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+            Save(rawJson);
+
+            Console.WriteLine("\nAdded Course Successfully!\n");
+        }
+
+        public void ListAll()
+        {
+            Console.WriteLine("\nCourses: \n");
+            foreach (var course in Courses)
+            {
+                Console.WriteLine(course.ToString());
+            }
+        }
+
+        public void Get(int Id)
+        {
+            Course course = Courses.FirstOrDefault(c => c.Id == Id);
+
+            if (course != null)
+            {
+                Console.WriteLine($"\nCourse {Id}: \n");
+                Console.WriteLine(course.ToString());
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+        }
+
+        public void Update(Course updatedCourse, int Id)
+        {
+            var course = Courses.FirstOrDefault(c => c.Id == Id);
+
+            if (course != null)
+            {
+                course.Name = updatedCourse.Name;
+                couirse.Subjects = updatedCourse.Subjects;
+
+                var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
+
+                Console.WriteLine("\nCourse Updated Successfully!\n");
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+
+        }
+
+        public void Delete(int Id)
+        {
+            var course = Courses.FirstOrDefault(c => c.Id == Id);
+
+            if (course != null)
+            {
+                Courses.Remove(course);
+
+                var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
+
+                Console.WriteLine("\nDeleted Course Successfully!\n");
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+        }
+
+        public void AddSubject(Subject subject)
+        {
+            Course course = Courses.FirstOrDefault(c => c.Id == subject.CourseId);
+            if (course != null)
+            {
+                course.Subjects.Add(subject);
+                var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
+                Console.WriteLine($"\n Subject : {subject.Name} Added Successfully To Course {course.Name} \n");
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+        }
+
+        public void DeleteSubject(int CourseId , int SubjectId) 
+        {
+            Course course = Courses.FirstOrDefault(c => c.Id == CourseId);
+            if (course != null)
+            {
+                var subject = course.Subjects.FirstOrDefault(s => s.Id == SubjectId);
+                if (subject != null)
+                {
+                    course.Subjects.Remove(subject);
+                    var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                    Save(rawJson);
+                    Console.WriteLine($"\n Subject : {subject.Name} Removed Successfully from Course {course.Name} \n");
+                }
+                else 
+                { Console.WriteLine("Subject not found"); }
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+
+        }
+
+        private void Save(string rawJson)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("Courses data file not found.");
+                    return;
+                }
+
+                File.WriteAllText(filePath, rawJson);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving courses data: {ex.Message}");
+            }
+        }
+
+        private List<Course> Load(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("Courses data file not found, Starting with empty list.");
+                    return new List<Course>();
+                }
+
+
+                using var stream = File.OpenRead(filePath);
+                var courses = JsonSerializer.Deserialize<List<Course>>(stream);
+
+                return courses ?? new List<Course>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading courses data: {ex.Message}");
+                return new List<Course>();
+            }
+        }
+
+
+    }
+}

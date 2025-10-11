@@ -10,13 +10,13 @@ namespace School_Management.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Course Course { get; set; }
+        public int CourseId { get; set; }
 
-        public Subject(int Id ,string Name ,Course Course) 
+        public Subject(int Id ,string Name ,int CourseId) 
         {
             this.Id = Id;
             this.Name = Name;
-            this.Course= Course;
+            this.CourseId = CourseId;
         }
 
         public override string ToString()
@@ -24,7 +24,7 @@ namespace School_Management.Models
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Subject Id : {Id}");
             sb.AppendLine($"Name : {Name}");
-            sb.AppendLine($"Course Name : {Course.Name}");
+            sb.AppendLine($"Course Id : {CourseId}");
             return sb.ToString();
         }
     }

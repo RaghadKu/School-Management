@@ -11,13 +11,7 @@ namespace School_Management
 
             StudentService studentService = new StudentService();
             TeacherService teacherService = new TeacherService();
-
-            Course maths = new Course(1, "Maths A", []);
-            Course physics = new Course(2, "Physics A", []);
-            Course programming = new Course(3, "Programming A", []);
-            Course philosophy = new Course(4, "Philosophy A", []);
-            Course deutschA1 = new Course(5, "Deutsch A1", []);
-            Course deutschA2 = new Course(6, "Deutsch A2", []);
+            CourseService courseService = new CourseService();
 
             while (isWorking)
             {
@@ -36,6 +30,13 @@ namespace School_Management
                     "11. Assign Grade To Student.\n" +
                     "12. List All Students By Subject.\n" +
                     "13. Generate Last Month's Report.\n" +
+                    "14. List All Courses.\n" +
+                    "15. Add New Course.\n" +
+                    "16. Find Course By Id.\n" +
+                    "17. Delete Course.\n" +
+                    "18. Update Course.\n" +
+                    "19. Add Subject To Course.\n" +
+                    "20. Delete Subject From Course.\n" +
                     "0. Exit");
 
                 Console.Write("Choose An Option: ");
@@ -169,7 +170,7 @@ namespace School_Management
 
                             if (subjectName == "-1" || subjectName.Equals("")) break;
 
-                            Subjects.Add(new Subject(Subjects.Count, subjectName, maths));
+                            Subjects.Add(new Subject(Subjects.Count, subjectName, 4));
                             counterII++;
                         }
 
@@ -205,6 +206,152 @@ namespace School_Management
                         Console.Clear();
 
                         break;
+
+                    case 14:
+                        courseService.ListAll();
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 15:
+                        Console.Write("Course Name: ");
+                        var courseName = Console.ReadLine() ?? string.Empty;
+
+                        Console.WriteLine("Subjects: (Enter -1 to Exit)");
+
+                        List<Subject> Subjects = [];
+
+                        int counter = 1;
+                        while (true)
+                        {
+                            Console.Write("Add Subject " + counter + " Name: ");
+                            var subjectName = Console.ReadLine() ?? string.Empty;
+
+                            if (subjectName == "-1" || subjectName.Equals("")) break;
+
+                            Console.Write("Add Course Id: ");
+                            isCorrect = int.TryParse(Console.ReadLine(), out int courseId);
+
+                            if (courseId < 0) break;
+                            if (!isCorrect) break;
+                            Subjects.Add(Subjects.Count);
+                            Subjects.Add(subjectName);
+                            Subjects.Add(courseId);
+                            counter++;
+                        }
+
+                        Course course = new Course(
+                            courseService.Courses.Count,
+                            courseName,
+                            Subjects);
+
+                        courseService.Add(course);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 16:
+                        int getId = 0;
+                        Console.Write("Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out getId);
+                        courseService.Get(getId);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 17:
+                        int deleteId = 0;
+                        Console.Write("Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out deleteId);
+                        courseService.Delete(deleteId);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 18:
+                        Console.Write("Enter Course Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out int courseId);
+
+                        if (courseId < 0) break;
+
+                        Console.Write("Course Name: ");
+                        var courseName = Console.ReadLine() ?? string.Empty;
+
+                        Console.WriteLine("Subjects: (Enter -1 to Exit)");
+
+                        List<Subject> Subjects = [];
+
+                        int counter = 1;
+                        while (true)
+                        {
+                            Console.Write("Add Subject " + counter + " Name: ");
+                            var subjectName = Console.ReadLine() ?? string.Empty;
+
+                            if (subjectName == "-1" || subjectName.Equals("")) break;
+                            if (!isCorrect) break;
+                            Subjects.Add(Subjects.Count);
+                            Subjects.Add(subjectName);
+                            Subjects.Add(courseId);
+                            counter++;
+                        }
+
+                        Course course = new Course(
+                            courseId,
+                            courseName,
+                            Subjects);
+
+                        courseService.Update(course,courseId);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
+                    case 19:
+                        Console.Write(" Enter Subject Name: ");
+                        var subjectName = Console.ReadLine() ?? string.Empty;
+
+                        Console.Write("Enter Course Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out int courseId);
+
+                        if (courseId < 0) break;
+                        Course course = courseService.Get(courseId);
+                        Subject subject = new Subject(course.Subjects.Count,subjectName,courseId);
+                        courseService.AddSubject(subject);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+
+                    case 20:
+                        int courseId = 0;
+                        int subjectId = 0;
+                        Console.Write("Course Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out courseId);
+                        Console.Write("Subject Id: ");
+                        isCorrect = int.TryParse(Console.ReadLine(), out subjectId);
+                        courseService.DeleteSubject(courseId,subjectId);
+
+                        Console.Write("\nEnter Any Key To Continue: ");
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        break;
+
 
                     default:
                         isWorking = false;

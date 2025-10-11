@@ -12,14 +12,14 @@ namespace School_Management.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<Subject> Subjects { get; set; } = new();
+        public Subject Subject { get; set; } 
 
-        public Teacher(int Id, string FirstName, string LastName, List<Subject> Subjects)
+        public Teacher(int Id, string FirstName, string LastName, Subject Subject)
         {
             this.Id = Id;
             this.FirstName = FirstName;
             this.LastName = LastName;
-            this.Subjects = Subjects;
+            this.Subject = Subject;
         }
 
         public override string ToString()
@@ -27,15 +27,12 @@ namespace School_Management.Models
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Teacher Id : {Id}");
             sb.AppendLine($"First Name : {FirstName}");
-            sb.AppendLine($"Last Name : {LastName}");
-            foreach (var subject in Subjects)
-            {
-                sb.AppendLine("{");
-                sb.AppendLine($"   Subject Id : {subject.Id}");
-                sb.AppendLine($"   Subject Name : {subject.Name}");
-                sb.AppendLine($"   Course Name : {subject.Course.Name}");
-                sb.AppendLine("}");
-            }
+            sb.AppendLine($"Last Name : {LastName}"); 
+            sb.AppendLine("{");
+            sb.AppendLine($"   Subject Id : {Subject.Id}");
+            sb.AppendLine($"   Subject Name : {Subject.Name}");
+            sb.AppendLine($"   Course Id : {Subject.CourseId}");
+            sb.AppendLine("}");         
             return sb.ToString();
         }
     }
