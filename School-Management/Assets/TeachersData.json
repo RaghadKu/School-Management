@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "Id": 0,
+    "FirstName": "Ahmad",
+    "LastName": "Baroudi",
+    "Subject": {
+      "Id": 5,
+      "Name": "Calculus Advanced",
+      "CourseId": 0
+    }
+  },
+  {
+    "Id": 1,
+    "FirstName": "Khaled",
+    "LastName": "Sabah",
+    "Subject": {
+      "Id": 3,
+      "Name": "Algebra 2",
+      "CourseId": 0
+    }
+  }
+]

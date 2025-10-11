@@ -26,8 +26,10 @@ namespace School_Management.Models
             sb.AppendLine($"Course Name : {Name}");
             foreach (var subject in Subjects)
             {
-                sb.AppendLine($"Subject Id : {subject.Id}");
-                sb.AppendLine($"Subject Name : {subject.Name}");
+                sb.AppendLine("{");
+                sb.AppendLine($"   Subject Id : {subject.Id}");
+                sb.AppendLine($"   Subject Name : {subject.Name}");
+                sb.AppendLine("}");
             }
             return sb.ToString();
         }

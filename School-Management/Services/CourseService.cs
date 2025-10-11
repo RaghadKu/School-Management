@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace School_Management.Services
@@ -35,7 +36,7 @@ namespace School_Management.Services
         public void ListAll()
         {
             Console.WriteLine("\nCourses: \n");
-            foreach (var course in Courses)
+            foreach (Course course in Courses)
             {
                 Console.WriteLine(course.ToString());
             }
@@ -63,7 +64,7 @@ namespace School_Management.Services
             if (course != null)
             {
                 course.Name = updatedCourse.Name;
-                couirse.Subjects = updatedCourse.Subjects;
+                course.Subjects = updatedCourse.Subjects;
 
                 var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
                 Save(rawJson);
@@ -74,7 +75,6 @@ namespace School_Management.Services
             {
                 Console.WriteLine("Course not found!");
             }
-
         }
 
         public void Delete(int Id)
@@ -99,6 +99,7 @@ namespace School_Management.Services
         public void AddSubject(Subject subject)
         {
             Course course = Courses.FirstOrDefault(c => c.Id == subject.CourseId);
+
             if (course != null)
             {
                 course.Subjects.Add(subject);

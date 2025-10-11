@@ -1,4 +1,89 @@
-
-[]
-
-
+[
+  {
+    "Id": 0,
+    "Name": "Maths",
+    "Subjects": [
+      {
+        "Id": 0,
+        "Name": "Calculus 1",
+        "CourseId": 0
+      },
+      {
+        "Id": 1,
+        "Name": "Calculus 2",
+        "CourseId": 0
+      },
+      {
+        "Id": 2,
+        "Name": "Algebra 1",
+        "CourseId": 0
+      },
+      {
+        "Id": 3,
+        "Name": "Algebra 2",
+        "CourseId": 0
+      },
+      {
+        "Id": 4,
+        "Name": "Linear Algebra",
+        "CourseId": 0
+      },
+      {
+        "Id": 5,
+        "Name": "Calculus Advanced",
+        "CourseId": 0
+      },
+      {
+        "Id": 6,
+        "Name": "Complex Numbers",
+        "CourseId": 0
+      }
+    ]
+  },
+  {
+    "Id": 1,
+    "Name": "Philosophy",
+    "Subjects": [
+      {
+        "Id": 0,
+        "Name": "History of Philosophy",
+        "CourseId": 1
+      },
+      {
+        "Id": 1,
+        "Name": "Before Socrates",
+        "CourseId": 1
+      },
+      {
+        "Id": 2,
+        "Name": "Post Socrates",
+        "CourseId": 1
+      },
+      {
+        "Id": 3,
+        "Name": "Stocism",
+        "CourseId": 1
+      },
+      {
+        "Id": 4,
+        "Name": "Existenism",
+        "CourseId": 1
+      },
+      {
+        "Id": 5,
+        "Name": "Marxisismm",
+        "CourseId": 1
+      },
+      {
+        "Id": 6,
+        "Name": "Feminisism",
+        "CourseId": 1
+      },
+      {
+        "Id": 7,
+        "Name": "1",
+        "CourseId": 1
+      }
+    ]
+  }
+]

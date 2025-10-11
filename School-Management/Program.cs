@@ -160,21 +160,23 @@ namespace School_Management
                         Console.Write("Last Name: ");
                         var lastNameII = Console.ReadLine() ?? string.Empty;
 
-                        List<Subject> Subjects = [];
+                        courseService.ListAll();
+                        Console.WriteLine("\nSelect Course Id: ");
+                        bool isCorrectIV = int.TryParse(Console.ReadLine(), out int teacherCourseId);
 
-                        int counterII = 1;
-                        while (true)
+                        List<Subject> subjects = courseService.Courses.FirstOrDefault(c => c.Id == teacherCourseId).Subjects.ToList();
+
+                        foreach (var sub in subjects)
                         {
-                            Console.Write("Add Subject " + counterII + " Name: ");
-                            var subjectName = Console.ReadLine() ?? string.Empty;
-
-                            if (subjectName == "-1" || subjectName.Equals("")) break;
-
-                            Subjects.Add(new Subject(Subjects.Count, subjectName, 4));
-                            counterII++;
+                            Console.WriteLine(sub.ToString());
                         }
+                        Console.Write("\nSelect Subject Id: ");
 
-                        Teacher teacher = new Teacher(teacherService.Teachers.Count, firstNameII, lastNameII, Subjects);
+                        bool isCorrectV = int.TryParse(Console.ReadLine(), out int teacherSubjectId);
+
+                        Subject subject1 = subjects.FirstOrDefault(s => s.Id == teacherSubjectId);
+
+                        Teacher teacher = new Teacher(teacherService.Teachers.Count, firstNameII, lastNameII, subject1);
                         teacherService.Add(teacher);
 
                         Console.Write("\nEnter Any Key To Continue: ");
@@ -222,31 +224,26 @@ namespace School_Management
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
-                        List<Subject> Subjects = [];
+                        List<Subject> SubjectsII = [];
 
-                        int counter = 1;
+                        int counterIII = 1;
                         while (true)
                         {
-                            Console.Write("Add Subject " + counter + " Name: ");
-                            var subjectName = Console.ReadLine() ?? string.Empty;
+                            Console.Write("Add Subject " + counterIII + " Name: ");
+                            var subjectNameII = Console.ReadLine() ?? string.Empty;
 
-                            if (subjectName == "-1" || subjectName.Equals("")) break;
+                            if (subjectNameII == "-1" || subjectNameII.Equals("")) break;
 
-                            Console.Write("Add Course Id: ");
-                            isCorrect = int.TryParse(Console.ReadLine(), out int courseId);
+                            Subject subjectII = new Subject(SubjectsII.Count, subjectNameII, courseService.Courses.Count);
+                            SubjectsII.Add(subjectII);
 
-                            if (courseId < 0) break;
-                            if (!isCorrect) break;
-                            Subjects.Add(Subjects.Count);
-                            Subjects.Add(subjectName);
-                            Subjects.Add(courseId);
-                            counter++;
+                            counterIII++;
                         }
 
                         Course course = new Course(
                             courseService.Courses.Count,
                             courseName,
-                            Subjects);
+                            SubjectsII);
 
                         courseService.Add(course);
 
@@ -257,10 +254,10 @@ namespace School_Management
                         break;
 
                     case 16:
-                        int getId = 0;
+                        int getIdIII = 0;
                         Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out getId);
-                        courseService.Get(getId);
+                        isCorrect = int.TryParse(Console.ReadLine(), out getIdIII);
+                        courseService.Get(getIdIII);
 
                         Console.Write("\nEnter Any Key To Continue: ");
                         Console.ReadKey();
@@ -269,10 +266,10 @@ namespace School_Management
                         break;
 
                     case 17:
-                        int deleteId = 0;
+                        int deleteIdIII = 0;
                         Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out deleteId);
-                        courseService.Delete(deleteId);
+                        isCorrect = int.TryParse(Console.ReadLine(), out deleteIdIII);
+                        courseService.Delete(deleteIdIII);
 
                         Console.Write("\nEnter Any Key To Continue: ");
                         Console.ReadKey();
@@ -287,32 +284,29 @@ namespace School_Management
                         if (courseId < 0) break;
 
                         Console.Write("Course Name: ");
-                        var courseName = Console.ReadLine() ?? string.Empty;
+                        var courseNameII = Console.ReadLine() ?? string.Empty;
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
-                        List<Subject> Subjects = [];
+                        List<Subject> SubjectsIII = [];
 
-                        int counter = 1;
+                        int counterIIII = 1;
                         while (true)
                         {
-                            Console.Write("Add Subject " + counter + " Name: ");
-                            var subjectName = Console.ReadLine() ?? string.Empty;
+                            Console.Write("Add Subject " + counterIIII + " Name: ");
+                            var subjectNameIII = Console.ReadLine() ?? string.Empty;
 
-                            if (subjectName == "-1" || subjectName.Equals("")) break;
-                            if (!isCorrect) break;
-                            Subjects.Add(Subjects.Count);
-                            Subjects.Add(subjectName);
-                            Subjects.Add(courseId);
-                            counter++;
+                            if (subjectNameIII == "-1" || subjectNameIII.Equals("")) break;
+
+                            counterIIII++;
                         }
 
-                        Course course = new Course(
+                        Course updatedCourse = new Course(
                             courseId,
-                            courseName,
-                            Subjects);
+                            courseNameII,
+                            SubjectsIII);
 
-                        courseService.Update(course,courseId);
+                        courseService.Update(updatedCourse, courseId);
 
                         Console.Write("\nEnter Any Key To Continue: ");
                         Console.ReadKey();
@@ -325,33 +319,39 @@ namespace School_Management
                         var subjectName = Console.ReadLine() ?? string.Empty;
 
                         Console.Write("Enter Course Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out int courseId);
+                        isCorrect = int.TryParse(Console.ReadLine(), out int courseIdIII);
 
-                        if (courseId < 0) break;
-                        Course course = courseService.Get(courseId);
-                        Subject subject = new Subject(course.Subjects.Count,subjectName,courseId);
+                        if (courseIdIII < 0) break;
+
+                        Course currentCourse = courseService.Courses.FirstOrDefault(c => c.Id == courseIdIII);
+
+                        Subject subject = new Subject(currentCourse.Subjects.Count, subjectName, courseIdIII);
+
                         courseService.AddSubject(subject);
 
                         Console.Write("\nEnter Any Key To Continue: ");
                         Console.ReadKey();
                         Console.Clear();
+
                         break;
 
                     case 20:
-                        int courseId = 0;
+                        int courseIdIV = 0;
                         int subjectId = 0;
+
                         Console.Write("Course Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out courseId);
+                        isCorrect = int.TryParse(Console.ReadLine(), out courseIdIV);
+
                         Console.Write("Subject Id: ");
                         isCorrect = int.TryParse(Console.ReadLine(), out subjectId);
-                        courseService.DeleteSubject(courseId,subjectId);
+
+                        courseService.DeleteSubject(courseIdIV, subjectId);
 
                         Console.Write("\nEnter Any Key To Continue: ");
                         Console.ReadKey();
                         Console.Clear();
 
                         break;
-
 
                     default:
                         isWorking = false;

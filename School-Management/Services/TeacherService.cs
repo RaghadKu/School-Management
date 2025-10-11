@@ -65,7 +65,7 @@ namespace School_Management.Services
             {
                 teacher.FirstName = updatedTeacher.FirstName;
                 teacher.LastName = updatedTeacher.LastName;
-                teacher.Subjects = updatedTeacher.Subjects;
+                teacher.Subject = updatedTeacher.Subject;
 
                 var rawJson = JsonSerializer.Serialize(Teachers, new JsonSerializerOptions { WriteIndented = true });
                 Save(rawJson);
