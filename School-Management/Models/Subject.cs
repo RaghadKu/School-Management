@@ -22,9 +22,9 @@ namespace School_Management.Models
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Subject Id : {Id}");
-            sb.AppendLine($"Name : {Name}");
-            sb.AppendLine($"Course Id : {CourseId}");
+            sb.AppendLine($"- Subject Id : {Id}");
+            sb.AppendLine($"- Name : {Name}");
+            sb.AppendLine($"- Course Id : {CourseId}");
             return sb.ToString();
         }
     }

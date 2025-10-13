@@ -1,3 +1,24 @@
 [
-
+  {
+    "Id": 0,
+    "FirstName": "Ahmad",
+    "LastName": "Khaled",
+    "BirthDate": "2018-07-07",
+    "Address": "Swaidaa",
+    "Grades": {
+      "Maths": 78,
+      "Maths 2": 80
+    }
+  },
+  {
+    "Id": 1,
+    "FirstName": "Samer",
+    "LastName": "Hamdan",
+    "BirthDate": "2019-08-14",
+    "Address": "Swaidaa",
+    "Grades": {
+      "Maths": 65,
+      "Maths 2": 74
+    }
+  }
 ]

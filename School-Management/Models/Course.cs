@@ -22,15 +22,16 @@ namespace School_Management.Models
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Course Id : {Id}");
-            sb.AppendLine($"Course Name : {Name}");
+            sb.AppendLine($"- Course Id : {Id}");
+            sb.AppendLine($"- Course Name : {Name}");
+            sb.AppendLine("- Subjects: ");
+            sb.AppendLine("{");
             foreach (var subject in Subjects)
             {
-                sb.AppendLine("{");
-                sb.AppendLine($"   Subject Id : {subject.Id}");
-                sb.AppendLine($"   Subject Name : {subject.Name}");
-                sb.AppendLine("}");
+                sb.AppendLine($"   Id : {subject.Id}");
+                sb.AppendLine($"   Name : {subject.Name},");
             }
+            sb.AppendLine("}");
             return sb.ToString();
         }
     }

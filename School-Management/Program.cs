@@ -1,4 +1,6 @@
-﻿using School_Management.Models;
+﻿#pragma warning disable CS8600
+
+using School_Management.Models;
 using School_Management.Services;
 
 namespace School_Management
@@ -58,18 +60,11 @@ namespace School_Management
                         var lastName = ReadString("Last Name: ");
 
                         Console.WriteLine("Date of Birth: ");
-                        Console.Write("Year: ");
-                        bool isCorrect = int.TryParse(Console.ReadLine(), out int year);
-                        Console.Write("Month: ");
-                        bool isCorrectII = int.TryParse(Console.ReadLine(), out int month);
-                        Console.Write("Day: ");
-                        bool isCorrectIII = int.TryParse(Console.ReadLine(), out int day);
+                        int year = ReadInt("Year: ", min: DateTime.Now.Year - 18, max: DateTime.Now.Year - 6);
+                        int month = ReadInt("Month: ", min: 1, max: 12);
+                        int day = ReadInt("Day: ", min: 1, max: 31);
 
-                        if (!isCorrect || !isCorrectII || !isCorrectIII) break;
-
-                        var location = ReadString("Enter student location: ");
-
-                        if (firstName.Equals("") || lastName.Equals("") || location.Equals("") || year == 0 || month == 0 || day == 0) break;
+                        var address = ReadString("Address: ");
 
                         Console.WriteLine("Grades: (Enter -1 to Exit)");
 
@@ -78,15 +73,11 @@ namespace School_Management
                         int counter = 1;
                         while(true)
                         {
-                            var gradeName = ReadString("Add Grade " + counter + " Name: ");
+                            var gradeName = ReadString("Grade " + counter + " Name: ");
 
-                            if (gradeName == "-1" || gradeName.Equals("")) break;
+                            if (gradeName == "-1") break;
 
-                            Console.Write("Add Grade " + counter + " Value: ");
-                            isCorrect = int.TryParse(Console.ReadLine(), out int gradeValue);
-
-                            if (gradeValue < 0 || gradeValue > 100) break;
-                            if (!isCorrect) break;
+                            int gradeValue = ReadInt("Grade " + counter + " Value: ", min: 0, max: 100);
 
                             Grades.Add(gradeName, gradeValue);
                             counter++;
@@ -97,7 +88,7 @@ namespace School_Management
                             firstName,
                             lastName, 
                             new DateOnly(year, month, day), 
-                            location, 
+                            address, 
                             Grades);
 
                         studentService.Add(student);
@@ -107,57 +98,90 @@ namespace School_Management
                         break;
 
                     case 3:
-                        int getId = 0;
-                        Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out getId);
-                        studentService.Get(getId);
-
+                        studentService.Get(ReadInt("Id: ", min: 0));
                         Organize();
 
                         break;
 
                     case 4:
-                        int deleteId = 0;
-                        Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out deleteId);
-                        studentService.Delete(deleteId);
-
+                        studentService.Delete(ReadInt("Id: ", min: 0));
                         Organize();
 
                         break;
 
                     case 5:
-                        Thread.Sleep(1000);
+
+                        int getId = ReadInt("Id: ", min: 0);
+
+                        student = studentService.Students.FirstOrDefault(s => s.Id == getId);
+
+                        studentService.Get(getId);
+
+                        if (!student.Equals(null))
+                        {
+                            firstName = ReadString("First Name: ");
+                            lastName = ReadString("Last Name: ");
+
+                            Console.WriteLine("Date of Birth: ");
+                            year = ReadInt("Year: ", min: DateTime.Now.Year - 18, max: DateTime.Now.Year - 6);
+                            month = ReadInt("Month: ", min: 1, max: 12);
+                            day = ReadInt("Day: ", min: 1, max: 31);
+
+                            address = ReadString("Address: ");
+
+                            Grades = [];
+
+                            counter = 1;
+                            while (true)
+                            {
+                                var gradeName = ReadString("Grade " + counter + " Name: ");
+
+                                if (gradeName == "-1") break;
+
+                                int gradeValue = ReadInt("Grade " + counter + " Value: ", min: 0, max: 100);
+
+                                Grades.Add(gradeName, gradeValue);
+                                counter++;
+                            }
+
+                            Student updatedStudent = new Student(
+                                getId,
+                                firstName,
+                                lastName,
+                                new DateOnly(year, month, day),
+                                address,
+                                Grades);
+
+                            studentService.Update(updatedStudent, getId);
+                        }
+                        Organize();
+
                         break;
 
                     case 6:
                         teacherService.ListAll();
-
                         Organize();
 
                         break;
 
                     case 7:
-                        var firstNameII = ReadString("First Name: "); ;
-                        var lastNameII = ReadString("Last Name: "); ;
+                        firstName = ReadString("First Name: "); ;
+                        lastName = ReadString("Last Name: "); ;
 
                         courseService.ListAll();
-                        Console.WriteLine("\nSelect Course Id: ");
-                        bool isCorrectIV = int.TryParse(Console.ReadLine(), out int teacherCourseId);
+                        int courseId = ReadInt("Course Id: ", min: 0);
 
-                        List<Subject> subjects = courseService.Courses.FirstOrDefault(c => c.Id == teacherCourseId).Subjects.ToList();
-
-                        foreach (var sub in subjects)
+                        List<Subject> Subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId).Subjects.ToList();
+                        foreach (var sub in Subjects)
                         {
                             Console.WriteLine(sub.ToString());
                         }
-                        Console.Write("\nSelect Subject Id: ");
 
-                        bool isCorrectV = int.TryParse(Console.ReadLine(), out int teacherSubjectId);
+                        int subjectId = ReadInt("Subject Id: ", min: 0);
 
-                        Subject subject1 = subjects.FirstOrDefault(s => s.Id == teacherSubjectId);
+                        Subject subject = Subjects.FirstOrDefault(s => s.Id == subjectId);
 
-                        Teacher teacher = new Teacher(teacherService.Teachers.Count, firstNameII, lastNameII, subject1);
+                        Teacher teacher = new Teacher(teacherService.Teachers.Count, firstName, lastName, subject);
                         teacherService.Add(teacher);
 
                         Organize();
@@ -165,20 +189,43 @@ namespace School_Management
                         break;
 
                     case 8:
-                        int getIdII = 0;
-                        Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out getIdII);
-                        teacherService.Get(getIdII);
-
+                        teacherService.Get(ReadInt("Id: ", min: 0));
                         Organize();
 
                         break;
 
                     case 9:
-                        int deleteIdII = 0;
-                        Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out deleteIdII);
-                        teacherService.Delete(deleteIdII);
+                        teacherService.Delete(ReadInt("Id: ", min: 0));
+                        Organize();
+
+                        break;
+
+                    case 10:
+                        getId = ReadInt("Id: ", min: 0);
+                        teacher = teacherService.Teachers.FirstOrDefault(s => s.Id == getId);
+
+                        firstName = ReadString("First Name: "); ;
+                        lastName = ReadString("Last Name: "); ;
+
+                        courseService.ListAll();
+                        courseId = ReadInt("Course Id: ", min: 0);
+
+                        Subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId).Subjects.ToList();
+                        foreach (var sub in Subjects)
+                        {
+                            Console.WriteLine(sub.ToString());
+                        }
+
+                        subjectId = ReadInt("Subject Id: ", min: 0);
+                        subject = Subjects.FirstOrDefault(s => s.Id == subjectId);
+
+                        teacher = new Teacher(
+                            getId, 
+                            firstName, 
+                            lastName,
+                            subject);
+
+                        teacherService.Update(teacher, getId);
 
                         Organize();
 
@@ -186,35 +233,35 @@ namespace School_Management
 
                     case 14:
                         courseService.ListAll();
-
                         Organize();
 
                         break;
 
                     case 15:
                         var courseName = ReadString("Course Name: "); ;
+                        var subjectName = string.Empty;
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
-                        List<Subject> SubjectsII = [];
+                        Subjects = [];
 
-                        int counterIII = 1;
+                        counter = 1;
                         while (true)
                         {
-                            var subjectNameII = ReadString("Add Subject " + counterIII + " Name: ");
+                            subjectName = ReadString("Subject " + counter + " Name: ");
 
-                            if (subjectNameII == "-1" || subjectNameII.Equals("")) break;
+                            if (subjectName == "-1") break;
 
-                            Subject subjectII = new Subject(SubjectsII.Count, subjectNameII, courseService.Courses.Count);
-                            SubjectsII.Add(subjectII);
+                            Subject subjectII = new Subject(Subjects.Count, subjectName, courseService.Courses.Count);
+                            Subjects.Add(subjectII);
 
-                            counterIII++;
+                            counter++;
                         }
 
                         Course course = new Course(
                             courseService.Courses.Count,
                             courseName,
-                            SubjectsII);
+                            Subjects);
 
                         courseService.Add(course);
 
@@ -223,54 +270,42 @@ namespace School_Management
                         break;
 
                     case 16:
-                        int getIdIII = 0;
-                        Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out getIdIII);
-                        courseService.Get(getIdIII);
-
+                        courseService.Get(ReadInt("Id: ", min: 0));
                         Organize();
 
                         break;
 
                     case 17:
-                        int deleteIdIII = 0;
-                        Console.Write("Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out deleteIdIII);
-                        courseService.Delete(deleteIdIII);
-
+                        courseService.Delete(ReadInt("Id: ", min: 0));
                         Organize();
 
                         break;
 
                     case 18:
-                        Console.Write("Enter Course Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out int courseId);
-
-                        if (courseId < 0) break;
-
-                        var courseNameII = ReadString("Course Name: ");
+                        courseId = ReadInt("Course Id: ", min: 0);
+                        courseName = ReadString("Course Name: ");
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
-                        List<Subject> SubjectsIII = [];
+                        Subjects = [];
 
-                        int counterIIII = 1;
+                        counter = 1;
                         while (true)
                         {
-                            var subjectNameIII = ReadString("Add Subject " + counterIIII + " Name: ");
+                            subjectName = ReadString("Add Subject " + counter + " Name: ");
 
-                            if (subjectNameIII == "-1" || subjectNameIII.Equals("")) break;
+                            if (subjectName == "-1") break;
 
-                            Subject subjectIII = new Subject(SubjectsIII.Count, subjectNameIII, courseService.Courses.Count);
-                            SubjectsIII.Add(subjectIII);
+                            subject = new Subject(Subjects.Count, subjectName, courseService.Courses.Count);
+                            Subjects.Add(subject);
 
-                            counterIIII++;
+                            counter++;
                         }
 
                         Course updatedCourse = new Course(
                             courseId,
-                            courseNameII,
-                            SubjectsIII);
+                            courseName,
+                            Subjects);
 
                         courseService.Update(updatedCourse, courseId);
 
@@ -279,16 +314,12 @@ namespace School_Management
                         break;
 
                     case 19:
-                        var subjectName = ReadString(" Enter Subject Name: ");
+                        subjectName = ReadString("Subject Name: ");
+                        courseId = ReadInt("Course Id: ", min : 0);
 
-                        Console.Write("Enter Course Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out int courseIdIII);
+                        course = courseService.Courses.FirstOrDefault(c => c.Id == courseId);
 
-                        if (courseIdIII < 0) break;
-
-                        Course currentCourse = courseService.Courses.FirstOrDefault(c => c.Id == courseIdIII);
-
-                        Subject subject = new Subject(currentCourse.Subjects.Count, subjectName, courseIdIII);
+                        subject = new Subject(course.Subjects.Count, subjectName, courseId);
 
                         courseService.AddSubject(subject);
 
@@ -297,16 +328,10 @@ namespace School_Management
                         break;
 
                     case 20:
-                        int courseIdIV = 0;
-                        int subjectId = 0;
+                        courseId = ReadInt("Course Id: ", min: 0);
+                        subjectId = ReadInt("Course Id: ", min: 0);
 
-                        Console.Write("Course Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out courseIdIV);
-
-                        Console.Write("Subject Id: ");
-                        isCorrect = int.TryParse(Console.ReadLine(), out subjectId);
-
-                        courseService.DeleteSubject(courseIdIV, subjectId);
+                        courseService.DeleteSubject(courseId, subjectId);
 
                         Organize();
 
@@ -318,6 +343,7 @@ namespace School_Management
                 }
             }
         }
+
         public static string ReadString(string text) 
         {
             string inputString;
@@ -332,8 +358,23 @@ namespace School_Management
                 Console.Clear();
                 Console.WriteLine("Invalid input try again");
             }
-            return string.Empty;
         }
+        public static int ReadInt(string text, int min = int.MinValue, int max = int.MaxValue)
+        {
+            int inputInteger;
+            while (true)
+            {
+                Console.Write(text);
+                bool isCorrect = int.TryParse(Console.ReadLine(), out inputInteger);
+                if (inputInteger <= max && inputInteger >= min && isCorrect)
+                {
+                    return inputInteger;
+                }
+                Console.Clear();
+                Console.WriteLine("Invalid input try again");
+            }
+        }
+
         public static void Organize() 
         {
             Console.Write("\nEnter Any Key To Continue: ");

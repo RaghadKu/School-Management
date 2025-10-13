@@ -25,9 +25,10 @@ namespace School_Management.Models
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Teacher Id : {Id}");
-            sb.AppendLine($"First Name : {FirstName}");
-            sb.AppendLine($"Last Name : {LastName}"); 
+            sb.AppendLine($"- Teacher Id : {Id}");
+            sb.AppendLine($"- First Name : {FirstName}");
+            sb.AppendLine($"- Last Name : {LastName}"); 
+            sb.AppendLine("- Subject:");
             sb.AppendLine("{");
             sb.AppendLine($"   Subject Id : {Subject.Id}");
             sb.AppendLine($"   Subject Name : {Subject.Name}");

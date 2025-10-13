@@ -46,12 +46,18 @@ namespace School_Management.Models
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Student Id : {Id}");
-            sb.AppendLine($"First Name : {FirstName}");
-            sb.AppendLine($"Last Name : {LastName}");
-            sb.AppendLine($"Birth Date : {BirthDate}");
-            sb.AppendLine($"Address : {Address}");
-            foreach (var grade in Grades) { sb.AppendLine($"{grade.Key} : {grade.Value}"); }
+            sb.AppendLine($"- Student Id : {Id}");
+            sb.AppendLine($"- First Name : {FirstName}");
+            sb.AppendLine($"- Last Name : {LastName}");
+            sb.AppendLine($"- Birth Date : {BirthDate}");
+            sb.AppendLine($"- Address : {Address}");
+            sb.AppendLine("- Grades:");
+            sb.AppendLine("{");
+            foreach (var grade in Grades) 
+            {
+                sb.AppendLine($"   {grade.Key} : {grade.Value},");
+            }
+            sb.AppendLine("}");
             return sb.ToString();
         }
     }
