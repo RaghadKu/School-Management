@@ -49,19 +49,13 @@ namespace School_Management
                 {
                     case 1:
                         studentService.ListAll();
-
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
                     case 2:
-                        Console.Write("First Name: ");
-                        var firstName = Console.ReadLine() ?? string.Empty;
-
-                        Console.Write("Last Name: ");
-                        var lastName = Console.ReadLine() ?? string.Empty;
+                        var firstName = ReadString("First Name: ");
+                        var lastName = ReadString("Last Name: ");
 
                         Console.WriteLine("Date of Birth: ");
                         Console.Write("Year: ");
@@ -73,8 +67,7 @@ namespace School_Management
 
                         if (!isCorrect || !isCorrectII || !isCorrectIII) break;
 
-                        Console.Write("Enter student location: ");
-                        var location = Console.ReadLine() ?? string.Empty;
+                        var location = ReadString("Enter student location: ");
 
                         if (firstName.Equals("") || lastName.Equals("") || location.Equals("") || year == 0 || month == 0 || day == 0) break;
 
@@ -85,8 +78,7 @@ namespace School_Management
                         int counter = 1;
                         while(true)
                         {
-                            Console.Write("Add Grade " + counter + " Name: ");
-                            var gradeName = Console.ReadLine() ?? string.Empty;
+                            var gradeName = ReadString("Add Grade " + counter + " Name: ");
 
                             if (gradeName == "-1" || gradeName.Equals("")) break;
 
@@ -110,9 +102,7 @@ namespace School_Management
 
                         studentService.Add(student);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -122,9 +112,7 @@ namespace School_Management
                         isCorrect = int.TryParse(Console.ReadLine(), out getId);
                         studentService.Get(getId);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -134,9 +122,7 @@ namespace School_Management
                         isCorrect = int.TryParse(Console.ReadLine(), out deleteId);
                         studentService.Delete(deleteId);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -147,18 +133,13 @@ namespace School_Management
                     case 6:
                         teacherService.ListAll();
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
                     case 7:
-                        Console.Write("First Name: ");
-                        var firstNameII = Console.ReadLine() ?? string.Empty;
-
-                        Console.Write("Last Name: ");
-                        var lastNameII = Console.ReadLine() ?? string.Empty;
+                        var firstNameII = ReadString("First Name: "); ;
+                        var lastNameII = ReadString("Last Name: "); ;
 
                         courseService.ListAll();
                         Console.WriteLine("\nSelect Course Id: ");
@@ -179,9 +160,7 @@ namespace School_Management
                         Teacher teacher = new Teacher(teacherService.Teachers.Count, firstNameII, lastNameII, subject1);
                         teacherService.Add(teacher);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -191,9 +170,7 @@ namespace School_Management
                         isCorrect = int.TryParse(Console.ReadLine(), out getIdII);
                         teacherService.Get(getIdII);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -203,24 +180,19 @@ namespace School_Management
                         isCorrect = int.TryParse(Console.ReadLine(), out deleteIdII);
                         teacherService.Delete(deleteIdII);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
                     case 14:
                         courseService.ListAll();
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
                     case 15:
-                        Console.Write("Course Name: ");
-                        var courseName = Console.ReadLine() ?? string.Empty;
+                        var courseName = ReadString("Course Name: "); ;
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
@@ -229,8 +201,7 @@ namespace School_Management
                         int counterIII = 1;
                         while (true)
                         {
-                            Console.Write("Add Subject " + counterIII + " Name: ");
-                            var subjectNameII = Console.ReadLine() ?? string.Empty;
+                            var subjectNameII = ReadString("Add Subject " + counterIII + " Name: ");
 
                             if (subjectNameII == "-1" || subjectNameII.Equals("")) break;
 
@@ -247,9 +218,7 @@ namespace School_Management
 
                         courseService.Add(course);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -259,9 +228,7 @@ namespace School_Management
                         isCorrect = int.TryParse(Console.ReadLine(), out getIdIII);
                         courseService.Get(getIdIII);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -271,9 +238,7 @@ namespace School_Management
                         isCorrect = int.TryParse(Console.ReadLine(), out deleteIdIII);
                         courseService.Delete(deleteIdIII);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -283,8 +248,7 @@ namespace School_Management
 
                         if (courseId < 0) break;
 
-                        Console.Write("Course Name: ");
-                        var courseNameII = Console.ReadLine() ?? string.Empty;
+                        var courseNameII = ReadString("Course Name: ");
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
@@ -293,10 +257,12 @@ namespace School_Management
                         int counterIIII = 1;
                         while (true)
                         {
-                            Console.Write("Add Subject " + counterIIII + " Name: ");
-                            var subjectNameIII = Console.ReadLine() ?? string.Empty;
+                            var subjectNameIII = ReadString("Add Subject " + counterIIII + " Name: ");
 
                             if (subjectNameIII == "-1" || subjectNameIII.Equals("")) break;
+
+                            Subject subjectIII = new Subject(SubjectsIII.Count, subjectNameIII, courseService.Courses.Count);
+                            SubjectsIII.Add(subjectIII);
 
                             counterIIII++;
                         }
@@ -308,15 +274,12 @@ namespace School_Management
 
                         courseService.Update(updatedCourse, courseId);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
                     case 19:
-                        Console.Write(" Enter Subject Name: ");
-                        var subjectName = Console.ReadLine() ?? string.Empty;
+                        var subjectName = ReadString(" Enter Subject Name: ");
 
                         Console.Write("Enter Course Id: ");
                         isCorrect = int.TryParse(Console.ReadLine(), out int courseIdIII);
@@ -329,9 +292,7 @@ namespace School_Management
 
                         courseService.AddSubject(subject);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -347,9 +308,7 @@ namespace School_Management
 
                         courseService.DeleteSubject(courseIdIV, subjectId);
 
-                        Console.Write("\nEnter Any Key To Continue: ");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Organize();
 
                         break;
 
@@ -358,6 +317,28 @@ namespace School_Management
                         break;
                 }
             }
+        }
+        public static string ReadString(string text) 
+        {
+            string inputString;
+            while (true)
+            {
+                Console.Write(text);
+                inputString = Console.ReadLine();
+                if (!string.IsNullOrEmpty(inputString)) 
+                {
+                    return inputString;
+                }
+                Console.Clear();
+                Console.WriteLine("Invalid input try again");
+            }
+            return string.Empty;
+        }
+        public static void Organize() 
+        {
+            Console.Write("\nEnter Any Key To Continue: ");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }
