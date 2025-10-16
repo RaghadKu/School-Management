@@ -39,6 +39,8 @@ namespace School_Management
                     "18. Update Course.\n" +
                     "19. Add Subject To Course.\n" +
                     "20. Delete Subject From Course.\n" +
+                    "21. Add Student To Course.\n" +
+                    "22. Delete Student From Course.\n" +
                     "0. Exit");
 
                 Console.Write("Choose An Option: ");
@@ -329,9 +331,63 @@ namespace School_Management
 
                     case 20:
                         courseId = ReadInt("Course Id: ", min: 0);
-                        subjectId = ReadInt("Course Id: ", min: 0);
+                        subjectId = ReadInt("Subject Id: ", min: 0);
 
                         courseService.DeleteSubject(courseId, subjectId);
+
+                        Organize();
+
+                        break;
+
+                    case 21:
+                        var _firstName = ReadString("First Name: ");
+                        var _lastName = ReadString("Last Name: ");
+
+                        Console.WriteLine("Date of Birth: ");
+                        int _year = ReadInt("Year: ", min: DateTime.Now.Year - 18, max: DateTime.Now.Year - 6);
+                        int _month = ReadInt("Month: ", min: 1, max: 12);
+                        int _day = ReadInt("Day: ", min: 1, max: 31);
+
+                        int course_Id = ReadInt("Course Id :");
+
+                        var _address = ReadString("Address: ");
+
+                        Console.WriteLine("Grades: (Enter -1 to Exit)");
+
+                        Dictionary<string, int> _Grades = [];
+
+                        int _counter = 1;
+                        while (true)
+                        {
+                            var _gradeName = ReadString("Grade " + _counter + " Name: ");
+
+                            if (_gradeName == "-1") break;
+
+                            int _gradeValue = ReadInt("Grade " + _counter + " Value: ", min: 0, max: 100);
+
+                            _Grades.Add(_gradeName, _gradeValue);
+                            _counter++;
+                        }
+
+                        Student _student = new Student(
+                            studentService.Students.Count,
+                            _firstName,
+                            _lastName,
+                            new DateOnly(_year, _month, _day),
+                            _address,
+                            _Grades);
+
+                        courseService.AddStudent(_student,course_Id);
+
+                        Organize();
+
+                        break;
+
+                    case 22:
+                        int _courseId = ReadInt("Course Id: ", min: 0);
+                        int  _studentId = ReadInt("Student Id: ", min: 0);
+
+                        courseService.DeleteStudent(_courseId, _studentId);
 
                         Organize();
 
@@ -374,7 +430,6 @@ namespace School_Management
                 Console.WriteLine("Invalid input try again");
             }
         }
-
         public static void Organize() 
         {
             Console.Write("\nEnter Any Key To Continue: ");

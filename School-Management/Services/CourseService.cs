@@ -112,13 +112,30 @@ namespace School_Management.Services
                 Console.WriteLine("Course not found!");
             }
         }
-
-        public void DeleteSubject(int CourseId , int SubjectId) 
+        public void AddStudent(Student student , int courseId)
         {
-            Course course = Courses.FirstOrDefault(c => c.Id == CourseId);
+            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+
             if (course != null)
             {
-                var subject = course.Subjects.FirstOrDefault(s => s.Id == SubjectId);
+                course.Students.Add(student);
+                var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
+                Console.WriteLine($"\n Student : {student.FirstName} Added Successfully To Course {course.Name} \n");
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+
+        }
+
+        public void DeleteSubject(int courseId , int subjectId) 
+        {
+            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            if (course != null)
+            {
+                var subject = course.Subjects.FirstOrDefault(s => s.Id == subjectId);
                 if (subject != null)
                 {
                     course.Subjects.Remove(subject);
@@ -128,6 +145,29 @@ namespace School_Management.Services
                 }
                 else 
                 { Console.WriteLine("Subject not found"); }
+            }
+            else
+            {
+                Console.WriteLine("Course not found!");
+            }
+
+        }
+
+        public void DeleteStudent(int courseId, int studentId)
+        {
+            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            if (course != null)
+            {
+                var student = course.Students.FirstOrDefault(s => s.Id == studentId);
+                if (student != null)
+                {
+                    course.Students.Remove(student);
+                    var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                    Save(rawJson);
+                    Console.WriteLine($"\n Student : {student.FirstName} Removed Successfully from Course {course.Name} \n");
+                }
+                else
+                { Console.WriteLine("Student not found"); }
             }
             else
             {
