@@ -41,6 +41,20 @@ namespace School_Management.Services
                 Console.WriteLine(course.ToString());
             }
         }
+        public void ListStudents(int courseId)
+        {
+            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            if (course != null)
+            {
+                Console.WriteLine($"\nStudents in Course {courseId} :");
+                course.ListStudentsInCourse();
+            }
+            else
+            {
+                Console.WriteLine("Course not found");
+            }
+
+        }
 
         public void Get(int Id)
         {
@@ -112,20 +126,28 @@ namespace School_Management.Services
                 Console.WriteLine("Course not found!");
             }
         }
-        public void AddStudent(Student student , int courseId)
+        public void AddStudent(int studentId , int courseId)
         {
+            StudentService studentService = new();
+            Student student = studentService.Students.FirstOrDefault(s => s.Id == studentId);
             Course course = Courses.FirstOrDefault(c => c.Id == courseId);
-
-            if (course != null)
+            if (student != null)
             {
-                course.Students.Add(student);
-                var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
-                Save(rawJson);
-                Console.WriteLine($"\n Student : {student.FirstName} Added Successfully To Course {course.Name} \n");
+                if (course != null)
+                {
+                    course.Students.Add(student);
+                    var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                    Save(rawJson);
+                    Console.WriteLine($"\n Student : {student.FirstName} Added Successfully To Course {course.Name} \n");
+                }
+                else
+                {
+                    Console.WriteLine("Course not found!");
+                }
             }
             else
             {
-                Console.WriteLine("Course not found!");
+                Console.WriteLine("Student not found!");
             }
 
         }

@@ -35,5 +35,10 @@ namespace School_Management.Models
             sb.AppendLine("}");
             return sb.ToString();
         }
+        public void ListStudentsInCourse()
+        {
+            foreach (var student in Students)
+                student.ToString();
+        }
     }
 }
