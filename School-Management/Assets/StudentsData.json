@@ -2,23 +2,35 @@
   {
     "Id": 0,
     "FirstName": "Ahmad",
-    "LastName": "Khaled",
-    "BirthDate": "2018-07-07",
-    "Address": "Swaidaa",
+    "LastName": "Mohammad",
+    "BirthDate": "2009-09-15",
+    "Address": "Damascus",
+    "CourseId": 0,
     "Grades": {
-      "Maths": 78,
-      "Maths 2": 80
+      "Calculus 1": -1,
+      "Calculus 2": -1,
+      "Algebra 1": -1,
+      "Algebra 2": -1,
+      "Linear Algebra": -1,
+      "Calculus Advanced": -1,
+      "Complex Numbers": -1
     }
   },
   {
     "Id": 1,
-    "FirstName": "Samer",
-    "LastName": "Hamdan",
-    "BirthDate": "2019-08-14",
-    "Address": "Swaidaa",
+    "FirstName": "yhgfg",
+    "LastName": "asdfg",
+    "BirthDate": "2012-04-06",
+    "Address": "fgdhs",
+    "CourseId": 1,
     "Grades": {
-      "Maths": 65,
-      "Maths 2": 74
+      "History of Philosophy": -1,
+      "Before Socrates": -1,
+      "Post Socrates": -1,
+      "Stocism": -1,
+      "Existenism": -1,
+      "Marxisismm": -1,
+      "Feminisism": -1
     }
   }
 ]

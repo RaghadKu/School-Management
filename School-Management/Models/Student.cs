@@ -13,9 +13,10 @@ namespace School_Management.Models
         public string LastName { get; set; }
         public DateOnly BirthDate { get; set; }
         public string Address { get; set; }
+        public int CourseId { get; set; }
         public Dictionary<string, int> Grades { get; set; }
 
-        public Student(int Id, string FirstName, string LastName, DateOnly BirthDate, string Address, Dictionary<string,int> Grades)
+        public Student(int Id, string FirstName, string LastName, DateOnly BirthDate, string Address, Dictionary<string,int> Grades, int CourseId)
         {
             this.Id = Id;
             this.FirstName = FirstName;
@@ -23,7 +24,7 @@ namespace School_Management.Models
             this.BirthDate = BirthDate;
             this.Address = Address;
             this.Grades = Grades;
-
+            this.CourseId = CourseId;
         }
 
         public int GetAge()
@@ -51,6 +52,7 @@ namespace School_Management.Models
             sb.AppendLine($"- Last Name : {LastName}");
             sb.AppendLine($"- Birth Date : {BirthDate}");
             sb.AppendLine($"- Address : {Address}");
+            sb.AppendLine($"- Course Id : {CourseId}");
             sb.AppendLine("- Grades:");
             sb.AppendLine("{");
             foreach (var grade in Grades) 

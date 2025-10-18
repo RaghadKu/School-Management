@@ -38,7 +38,7 @@ namespace School_Management.Models
         public void ListStudentsInCourse()
         {
             foreach (var student in Students)
-                student.ToString();
+                Console.WriteLine(student.ToString());
         }
     }
 }

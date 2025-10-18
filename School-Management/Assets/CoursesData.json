@@ -38,6 +38,25 @@
         "Name": "Complex Numbers",
         "CourseId": 0
       }
+    ],
+    "Students": [
+      {
+        "Id": 0,
+        "FirstName": "fgnjoou",
+        "LastName": "ahbhbi",
+        "BirthDate": "2019-07-03",
+        "Address": "sghllkd",
+        "CourseId": 0,
+        "Grades": {
+          "Calculus 1": -1,
+          "Calculus 2": -1,
+          "Algebra 1": -1,
+          "Algebra 2": -1,
+          "Linear Algebra": -1,
+          "Calculus Advanced": -1,
+          "Complex Numbers": -1
+        }
+      }
     ]
   },
   {
@@ -79,6 +98,7 @@
         "Name": "Feminisism",
         "CourseId": 1
       }
-    ]
+    ],
+    "Students": []
   }
 ]

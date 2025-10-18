@@ -69,21 +69,14 @@ namespace School_Management
 
                         var address = ReadString("Address: ");
 
-                        Console.WriteLine("Grades: (Enter -1 to Exit)");
+                        int courseId = ReadInt("Course Id: ", min: 0);
 
-                        Dictionary<string, int> Grades = [];
+                        Dictionary<string, int> Grades = new Dictionary<string, int>();
+                        List<Subject> subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId)?.Subjects;
 
-                        int counter = 1;
-                        while(true)
+                        foreach(Subject sub in subjects)
                         {
-                            var gradeName = ReadString("Grade " + counter + " Name: ");
-
-                            if (gradeName == "-1") break;
-
-                            int gradeValue = ReadInt("Grade " + counter + " Value: ", min: 0, max: 100);
-
-                            Grades.Add(gradeName, gradeValue);
-                            counter++;
+                            Grades.Add(sub.Name, -1);
                         }
                         
                         Student student = new Student(
@@ -92,9 +85,11 @@ namespace School_Management
                             lastName, 
                             new DateOnly(year, month, day), 
                             address, 
-                            Grades);
+                            Grades,
+                            courseId);
 
                         studentService.Add(student);
+                        courseService.AddStudent(student.Id, courseId);
 
                         Organize();
 
@@ -107,7 +102,13 @@ namespace School_Management
                         break;
 
                     case 4:
-                        studentService.Delete(ReadInt("Id: ", min: 0));
+                        int Id = ReadInt("Id: ", min: 0);
+                        courseService.DeleteStudent(studentService.Students.FirstOrDefault(s => s.Id == Id).CourseId, Id);
+                        foreach (Student st in studentService.Students.Where(s => s.Id > Id))
+                        {
+                            st.Id--;
+                        }
+                        studentService.Delete(Id);
                         Organize();
 
                         break;
@@ -132,19 +133,16 @@ namespace School_Management
 
                             address = ReadString("Address: ");
 
-                            Grades = [];
+                            courseId = ReadInt("Course Id: ", min: 0);
+                            courseService.AddStudent(getId, courseId);
+                            courseService.DeleteStudent(getId, courseId);
 
-                            counter = 1;
-                            while (true)
+                            Grades = new Dictionary<string, int>();
+                            subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId)?.Subjects;
+
+                            foreach (Subject sub in subjects)
                             {
-                                var gradeName = ReadString("Grade " + counter + " Name: ");
-
-                                if (gradeName == "-1") break;
-
-                                int gradeValue = ReadInt("Grade " + counter + " Value: ", min: 0, max: 100);
-
-                                Grades.Add(gradeName, gradeValue);
-                                counter++;
+                                Grades.Add(sub.Name, -1);
                             }
 
                             Student updatedStudent = new Student(
@@ -153,7 +151,8 @@ namespace School_Management
                                 lastName,
                                 new DateOnly(year, month, day),
                                 address,
-                                Grades);
+                                Grades,
+                                courseId);
 
                             studentService.Update(updatedStudent, getId);
                         }
@@ -172,7 +171,7 @@ namespace School_Management
                         lastName = ReadString("Last Name: "); ;
 
                         courseService.ListAll();
-                        int courseId = ReadInt("Course Id: ", min: 0);
+                        courseId = ReadInt("Course Id: ", min: 0);
 
                         List<Subject> Subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId).Subjects.ToList();
                         foreach (var sub in Subjects)
@@ -234,6 +233,12 @@ namespace School_Management
 
                         break;
 
+                    case 12:
+                        break;
+
+                    case 13:
+                        break;
+
                     case 14:
                         courseService.ListAll();
                         Organize();
@@ -248,7 +253,7 @@ namespace School_Management
 
                         Subjects = [];
 
-                        counter = 1;
+                        int counter = 1;
                         while (true)
                         {
                             subjectName = ReadString("Subject " + counter + " Name: ");
@@ -362,7 +367,6 @@ namespace School_Management
 
                     case 23:
                         _courseId = ReadInt("Course Id: ", min: 0);
-
                         courseService.ListStudents(_courseId);
 
                         Organize();
