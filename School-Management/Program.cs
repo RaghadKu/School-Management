@@ -284,7 +284,30 @@ namespace School_Management
 
                         break;
 
+                    case 11:
+                        foreach (Course c in courseService.Courses)
+                        {
+                            Console.Write(c.ListAbstractInfo());
+                            foreach(var s in c.Students)
+                            {
+                                Console.WriteLine(s.ListAbstractInfo());
+                            }
+                        }
+
+                        Console.WriteLine();
+                        courseService.AssignGrade(ReadGuid("Course Id:"),ReadGuid("Student Id: "),ReadString("Subject Name:"),ReadInt("Grade:"));
+                        Organize();
+
+                        break;
+
                     case 12:
+                        foreach (Course c in courseService.Courses)
+                        {
+                            Console.Write(c.ListAbstractInfo());
+                        }
+                        courseService.ListStudentsBySubject(ReadGuid("Id:"),ReadString("Subject Name:"));
+
+                        Organize();
                         break;
 
                     case 13:

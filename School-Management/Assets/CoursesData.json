@@ -124,7 +124,7 @@
           "Programming Languages": -1,
           "Web Fundamentals": -1,
           "Software Building": -1,
-          "Testing": -1,
+          "Testing": 80,
           "Deploying ": -1
         }
       }

@@ -200,6 +200,36 @@ namespace School_Management.Services
 
         }
 
+        public void ListStudentsBySubject(Guid Id, string subName)
+        {
+            var course = Courses.FirstOrDefault(c => c.Id.Equals(Id));
+            foreach (var std in course.Students)
+            {    
+                var grade = std.Grades.FirstOrDefault(g => g.Key == subName);
+                Console.WriteLine($"Grade of student {std.FirstName} {std.LastName} in subject {subName} is: {grade.Value}");
+
+            }
+        }
+
+        public void AssignGrade(Guid courseId ,Guid Id, string subName, int grade)
+        {
+            var course = Courses.FirstOrDefault(c => c.Id.Equals(courseId));
+            var student = course.Students.FirstOrDefault(s => s.Id.Equals(Id));
+            if (student != null)
+            {
+                student.Grades[subName] = grade;
+
+                var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
+                Save(rawJson);
+
+                Console.WriteLine("\nGrade Assigned Successfully!\n");
+            }
+            else
+            {
+                Console.WriteLine("Student not found!");
+            }
+        }
+
         private void Save(string rawJson)
         {
             try
