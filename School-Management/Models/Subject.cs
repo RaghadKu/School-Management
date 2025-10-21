@@ -8,13 +8,14 @@ namespace School_Management.Models
 {
     public class Subject
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
-        public int CourseId { get; set; }
+        public Guid CourseId { get; set; }
 
-        public Subject(int Id ,string Name ,int CourseId) 
+        public Subject() { }
+        public Subject(string Name ,Guid CourseId) 
         {
-            this.Id = Id;
+            this.Id = Guid.NewGuid();
             this.Name = Name;
             this.CourseId = CourseId;
         }
@@ -25,6 +26,14 @@ namespace School_Management.Models
             sb.AppendLine($"- Subject Id : {Id}");
             sb.AppendLine($"- Name : {Name}");
             sb.AppendLine($"- Course Id : {CourseId}");
+            return sb.ToString();
+        }
+
+        public string ListAbstractInfo()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"- Subject Id : {Id}, Name : {Name}");
+
             return sb.ToString();
         }
     }

@@ -8,15 +8,26 @@ namespace School_Management.Models
 {
     public class Student
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateOnly BirthDate { get; set; }
         public string Address { get; set; }
-        public int CourseId { get; set; }
+        public Guid CourseId { get; set; }
         public Dictionary<string, int> Grades { get; set; }
 
-        public Student(int Id, string FirstName, string LastName, DateOnly BirthDate, string Address, Dictionary<string,int> Grades, int CourseId)
+        public Student() { }
+        public Student(string FirstName, string LastName, DateOnly BirthDate, string Address, Dictionary<string,int> Grades, Guid CourseId)
+        {
+            this.Id = Guid.NewGuid();
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.BirthDate = BirthDate;
+            this.Address = Address;
+            this.Grades = Grades;
+            this.CourseId = CourseId;
+        }
+        public Student(Guid Id, string FirstName, string LastName, DateOnly BirthDate, string Address, Dictionary<string, int> Grades, Guid CourseId)
         {
             this.Id = Id;
             this.FirstName = FirstName;
@@ -60,6 +71,14 @@ namespace School_Management.Models
                 sb.AppendLine($"   {grade.Key} : {grade.Value},");
             }
             sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        public string ListAbstractInfo()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"- Student Id : {Id}, First Name : {FirstName}, Last Name : {LastName}");
+
             return sb.ToString();
         }
     }

@@ -69,10 +69,15 @@ namespace School_Management
 
                         var address = ReadString("Address: ");
 
-                        int courseId = ReadInt("Course Id: ", min: 0);
+                        foreach(Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        var courseId = ReadGuid("Course Id: ");
 
                         Dictionary<string, int> Grades = new Dictionary<string, int>();
-                        List<Subject> subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId)?.Subjects;
+                        List<Subject> subjects = courseService.Courses.FirstOrDefault(c => c.Id.Equals(courseId))?.Subjects;
 
                         foreach(Subject sub in subjects)
                         {
@@ -80,7 +85,6 @@ namespace School_Management
                         }
                         
                         Student student = new Student(
-                            studentService.Students.Count,
                             firstName,
                             lastName, 
                             new DateOnly(year, month, day), 
@@ -96,28 +100,41 @@ namespace School_Management
                         break;
 
                     case 3:
-                        studentService.Get(ReadInt("Id: ", min: 0));
+                        foreach (Student st in studentService.Students)
+                        {
+                            Console.Write(st.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+
+                        studentService.Get(ReadGuid("Id: "));
                         Organize();
 
                         break;
 
                     case 4:
-                        int Id = ReadInt("Id: ", min: 0);
-                        courseService.DeleteStudent(studentService.Students.FirstOrDefault(s => s.Id == Id).CourseId, Id);
-                        foreach (Student st in studentService.Students.Where(s => s.Id > Id))
+                        foreach (Student st in studentService.Students)
                         {
-                            st.Id--;
+                            Console.Write(st.ListAbstractInfo());
                         }
+                        Console.WriteLine();
+                        Guid Id = ReadGuid("Id: ");
+
+                        courseService.DeleteStudent(studentService.Students.FirstOrDefault(s => s.Id.Equals(Id)).CourseId, Id);
                         studentService.Delete(Id);
                         Organize();
 
                         break;
 
                     case 5:
+                        foreach (Student st in studentService.Students)
+                        {
+                            Console.Write(st.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
 
-                        int getId = ReadInt("Id: ", min: 0);
+                        Guid getId = ReadGuid("Id: ");
 
-                        student = studentService.Students.FirstOrDefault(s => s.Id == getId);
+                        student = studentService.Students.FirstOrDefault(s => s.Id.Equals(getId));
 
                         studentService.Get(getId);
 
@@ -133,9 +150,15 @@ namespace School_Management
 
                             address = ReadString("Address: ");
 
-                            courseId = ReadInt("Course Id: ", min: 0);
+                            foreach (Course co in courseService.Courses)
+                            {
+                                Console.Write(co.ListAbstractInfo());
+                            }
+                            Console.WriteLine();
+                            courseId = ReadGuid("Course Id: ");
+
                             courseService.AddStudent(getId, courseId);
-                            courseService.DeleteStudent(getId, courseId);
+                            courseService.DeleteStudent(courseId, getId);
 
                             Grades = new Dictionary<string, int>();
                             subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId)?.Subjects;
@@ -146,7 +169,6 @@ namespace School_Management
                             }
 
                             Student updatedStudent = new Student(
-                                getId,
                                 firstName,
                                 lastName,
                                 new DateOnly(year, month, day),
@@ -155,6 +177,8 @@ namespace School_Management
                                 courseId);
 
                             studentService.Update(updatedStudent, getId);
+                            courseService.DeleteStudent(courseId, getId);
+                            courseService.AddStudent(getId, courseId);
                         }
                         Organize();
 
@@ -170,20 +194,25 @@ namespace School_Management
                         firstName = ReadString("First Name: "); ;
                         lastName = ReadString("Last Name: "); ;
 
-                        courseService.ListAll();
-                        courseId = ReadInt("Course Id: ", min: 0);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
 
-                        List<Subject> Subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId).Subjects.ToList();
+                        List<Subject> Subjects = courseService.Courses.FirstOrDefault(c => c.Id.Equals(courseId)).Subjects.ToList();
                         foreach (var sub in Subjects)
                         {
-                            Console.WriteLine(sub.ToString());
+                            Console.Write(sub.ListAbstractInfo());
                         }
+                        Console.WriteLine();
 
-                        int subjectId = ReadInt("Subject Id: ", min: 0);
+                        var subjectName = ReadString("Subject Name: ");
 
-                        Subject subject = Subjects.FirstOrDefault(s => s.Id == subjectId);
+                        Subject subject = Subjects.FirstOrDefault(s => s.Name.Equals(subjectName));
 
-                        Teacher teacher = new Teacher(teacherService.Teachers.Count, firstName, lastName, subject);
+                        Teacher teacher = new Teacher(firstName, lastName, subject);
                         teacherService.Add(teacher);
 
                         Organize();
@@ -191,35 +220,57 @@ namespace School_Management
                         break;
 
                     case 8:
-                        teacherService.Get(ReadInt("Id: ", min: 0));
+                        foreach (Teacher te in teacherService.Teachers)
+                        {
+                            Console.Write(te.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        teacherService.Get(ReadGuid("Id: "));
                         Organize();
 
                         break;
 
                     case 9:
-                        teacherService.Delete(ReadInt("Id: ", min: 0));
+                        foreach (Teacher te in teacherService.Teachers)
+                        {
+                            Console.WriteLine(te.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        teacherService.Delete(ReadGuid("Id: "));
                         Organize();
 
                         break;
 
                     case 10:
-                        getId = ReadInt("Id: ", min: 0);
+                        foreach (Teacher te in teacherService.Teachers)
+                        {
+                            Console.Write(te.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        getId = ReadGuid("Id: ");
                         teacher = teacherService.Teachers.FirstOrDefault(s => s.Id == getId);
 
                         firstName = ReadString("First Name: "); ;
                         lastName = ReadString("Last Name: "); ;
 
                         courseService.ListAll();
-                        courseId = ReadInt("Course Id: ", min: 0);
 
-                        Subjects = courseService.Courses.FirstOrDefault(c => c.Id == courseId).Subjects.ToList();
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
+
+                        Subjects = courseService.Courses.FirstOrDefault(c => c.Id.Equals(courseId)).Subjects.ToList();
                         foreach (var sub in Subjects)
                         {
-                            Console.WriteLine(sub.ToString());
+                            Console.Write(sub.ToString());
                         }
+                        Console.WriteLine();
 
-                        subjectId = ReadInt("Subject Id: ", min: 0);
-                        subject = Subjects.FirstOrDefault(s => s.Id == subjectId);
+                        subjectName = ReadString("Subject Name: ");
+                        subject = Subjects.FirstOrDefault(s => s.Name.Equals(subjectName));
 
                         teacher = new Teacher(
                             getId, 
@@ -247,11 +298,12 @@ namespace School_Management
 
                     case 15:
                         var courseName = ReadString("Course Name: "); ;
-                        var subjectName = string.Empty;
+                        subjectName = string.Empty;
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
 
                         Subjects = [];
+                        courseId = Guid.NewGuid();
 
                         int counter = 1;
                         while (true)
@@ -260,14 +312,14 @@ namespace School_Management
 
                             if (subjectName == "-1") break;
 
-                            Subject subjectII = new Subject(Subjects.Count, subjectName, courseService.Courses.Count);
-                            Subjects.Add(subjectII);
+                            subject = new Subject(subjectName, courseId);
+                            Subjects.Add(subject);
 
                             counter++;
                         }
 
                         Course course = new Course(
-                            courseService.Courses.Count,
+                            Guid.NewGuid(),
                             courseName,
                             Subjects);
 
@@ -278,19 +330,34 @@ namespace School_Management
                         break;
 
                     case 16:
-                        courseService.Get(ReadInt("Id: ", min: 0));
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseService.Get(ReadGuid("Id: "));
                         Organize();
 
                         break;
 
                     case 17:
-                        courseService.Delete(ReadInt("Id: ", min: 0));
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseService.Delete(ReadGuid("Id: "));
                         Organize();
 
                         break;
 
                     case 18:
-                        courseId = ReadInt("Course Id: ", min: 0);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
                         courseName = ReadString("Course Name: ");
 
                         Console.WriteLine("Subjects: (Enter -1 to Exit)");
@@ -304,7 +371,7 @@ namespace School_Management
 
                             if (subjectName == "-1") break;
 
-                            subject = new Subject(Subjects.Count, subjectName, courseService.Courses.Count);
+                            subject = new Subject(subjectName, courseId);
                             Subjects.Add(subject);
 
                             counter++;
@@ -323,11 +390,17 @@ namespace School_Management
 
                     case 19:
                         subjectName = ReadString("Subject Name: ");
-                        courseId = ReadInt("Course Id: ", min : 0);
 
-                        course = courseService.Courses.FirstOrDefault(c => c.Id == courseId);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
 
-                        subject = new Subject(course.Subjects.Count, subjectName, courseId);
+                        course = courseService.Courses.FirstOrDefault(c => c.Id.Equals(courseId));
+
+                        subject = new Subject(subjectName, courseId);
 
                         courseService.AddSubject(subject);
 
@@ -336,38 +409,71 @@ namespace School_Management
                         break;
 
                     case 20:
-                        courseId = ReadInt("Course Id: ", min: 0);
-                        subjectId = ReadInt("Subject Id: ", min: 0);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
 
-                        courseService.DeleteSubject(courseId, subjectId);
+                        subjectName = ReadString("Subject Name: ");
+
+                        courseService.DeleteSubject(courseId, courseService.Courses.FirstOrDefault(c => c.Id.Equals(courseId)).Subjects.FirstOrDefault(s => s.Name.Equals(subjectName)).Id);
 
                         Organize();
 
                         break;
 
                     case 21:
-                        int course_Id = ReadInt("Course Id: ", min: 0);
-                        int student_Id = ReadInt("Student Id: ", min: 0);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
 
-                        courseService.AddStudent(student_Id,course_Id);
+                        foreach (Student st in studentService.Students)
+                        {
+                            Console.WriteLine(st.ListAbstractInfo());
+                        }
+                        var studentId = ReadGuid("Student Id: ");
+
+                        courseService.AddStudent(studentId, courseId);
 
                         Organize();
 
                         break;
 
                     case 22:
-                        int _courseId = ReadInt("Course Id: ", min: 0);
-                        int  _studentId = ReadInt("Student Id: ", min: 0);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
 
-                        courseService.DeleteStudent(_courseId, _studentId);
+                        foreach (Student st in studentService.Students)
+                        {
+                            Console.Write(st.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        studentId = ReadGuid("Student Id: ");
+
+                        courseService.DeleteStudent(courseId, studentId);
 
                         Organize();
 
                         break;
 
                     case 23:
-                        _courseId = ReadInt("Course Id: ", min: 0);
-                        courseService.ListStudents(_courseId);
+                        foreach (Course co in courseService.Courses)
+                        {
+                            Console.Write(co.ListAbstractInfo());
+                        }
+                        Console.WriteLine();
+                        courseId = ReadGuid("Course Id: ");
+
+                        courseService.ListStudents(courseId);
 
                         Organize();
 
@@ -396,6 +502,7 @@ namespace School_Management
                 Console.WriteLine("Invalid input try again");
             }
         }
+
         public static int ReadInt(string text, int min = int.MinValue, int max = int.MaxValue)
         {
             int inputInteger;
@@ -411,6 +518,25 @@ namespace School_Management
                 Console.WriteLine("Invalid input try again");
             }
         }
+
+        public static Guid ReadGuid(string text)
+        {
+            Guid guid;
+            while (true)
+            {
+                Console.Write(text);
+                bool isCorrect = Guid.TryParse(Console.ReadLine(), out guid);
+                if(isCorrect == false)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid input try again");
+                    continue;
+                }
+                break;
+            }
+            return guid;
+        }
+
         public static void Organize() 
         {
             Console.Write("\nEnter Any Key To Continue: ");

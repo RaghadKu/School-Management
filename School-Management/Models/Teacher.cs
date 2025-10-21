@@ -9,12 +9,20 @@ namespace School_Management.Models
 {
     public class Teacher
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Subject Subject { get; set; } 
+        public Subject Subject { get; set; }
 
-        public Teacher(int Id, string FirstName, string LastName, Subject Subject)
+        public Teacher() { }
+        public Teacher(string FirstName, string LastName, Subject Subject)
+        {
+            this.Id = Guid.NewGuid();
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.Subject = Subject;
+        }
+        public Teacher(Guid Id, string FirstName, string LastName, Subject Subject)
         {
             this.Id = Id;
             this.FirstName = FirstName;
@@ -34,6 +42,13 @@ namespace School_Management.Models
             sb.AppendLine($"   Subject Name : {Subject.Name}");
             sb.AppendLine($"   Course Id : {Subject.CourseId}");
             sb.AppendLine("}");         
+            return sb.ToString();
+        }
+        public string ListAbstractInfo()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"- Teacher Id : {Id}, First Name : {FirstName}, Last Name : {LastName}");
+
             return sb.ToString();
         }
     }

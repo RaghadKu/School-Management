@@ -42,9 +42,9 @@ namespace School_Management.Services
             }
         }
 
-        public void ListStudents(int courseId)
+        public void ListStudents(Guid courseId)
         {
-            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            Course course = Courses.FirstOrDefault(c => c.Id.Equals(courseId));
             if (course != null)
             {
                 Console.WriteLine($"\nStudents in Course {courseId} :");
@@ -57,9 +57,9 @@ namespace School_Management.Services
 
         }
 
-        public void Get(int Id)
+        public void Get(Guid Id)
         {
-            Course course = Courses.FirstOrDefault(c => c.Id == Id);
+            Course course = Courses.FirstOrDefault(c => c.Id.Equals(Id));
 
             if (course != null)
             {
@@ -72,9 +72,9 @@ namespace School_Management.Services
             }
         }
 
-        public void Update(Course updatedCourse, int Id)
+        public void Update(Course updatedCourse, Guid Id)
         {
-            var course = Courses.FirstOrDefault(c => c.Id == Id);
+            var course = Courses.FirstOrDefault(c => c.Id.Equals(Id));
 
             if (course != null)
             {
@@ -92,9 +92,9 @@ namespace School_Management.Services
             }
         }
 
-        public void Delete(int Id)
+        public void Delete(Guid Id)
         {
-            var course = Courses.FirstOrDefault(c => c.Id == Id);
+            var course = Courses.FirstOrDefault(c => c.Id.Equals(Id));
 
             if (course != null)
             {
@@ -113,7 +113,7 @@ namespace School_Management.Services
 
         public void AddSubject(Subject subject)
         {
-            Course course = Courses.FirstOrDefault(c => c.Id == subject.CourseId);
+            Course course = Courses.FirstOrDefault(c => c.Id.Equals(subject.CourseId));
 
             if (course != null)
             {
@@ -128,12 +128,12 @@ namespace School_Management.Services
             }
         }
 
-        public void DeleteSubject(int courseId, int subjectId)
+        public void DeleteSubject(Guid courseId, Guid subjectId)
         {
-            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            Course course = Courses.FirstOrDefault(c => c.Id.Equals(courseId));
             if (course != null)
             {
-                var subject = course.Subjects.FirstOrDefault(s => s.Id == subjectId);
+                var subject = course.Subjects.FirstOrDefault(s => s.Id.Equals(subjectId));
                 if (subject != null)
                 {
                     course.Subjects.Remove(subject);
@@ -150,11 +150,11 @@ namespace School_Management.Services
             }
         }
 
-        public void AddStudent(int studentId , int courseId)
+        public void AddStudent(Guid studentId , Guid courseId)
         {
             StudentService studentService = new();
-            Student student = studentService.Students.FirstOrDefault(s => s.Id == studentId);
-            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            Student student = studentService.Students.FirstOrDefault(s => s.Id.Equals(studentId));
+            Course course = Courses.FirstOrDefault(c => c.Id.Equals(courseId));
             if (student != null)
             {
                 if (course != null)
@@ -176,22 +176,16 @@ namespace School_Management.Services
 
         }
 
-        public void DeleteStudent(int courseId, int studentId)
+        public void DeleteStudent(Guid courseId, Guid studentId)
         {
-            Course course = Courses.FirstOrDefault(c => c.Id == courseId);
+            Course course = Courses.FirstOrDefault(c => c.Id.Equals(courseId));
             if (course != null)
             {
-                var student = course.Students.FirstOrDefault(s => s.Id == studentId);
+                var student = course.Students.FirstOrDefault(s => s.Id.Equals(studentId));
                 if (student != null)
                 {
                     course.Students.Remove(student);
-                    foreach (Student st in Courses.FirstOrDefault(c => c.Id == courseId).Students)
-                    {
-                        if (st.Id > studentId)
-                        {
-                            st.Id--;
-                        }
-                    }
+
                     var rawJson = JsonSerializer.Serialize(Courses, new JsonSerializerOptions { WriteIndented = true });
                     Save(rawJson);
                     Console.WriteLine($"\n Student : {student.FirstName} Removed Successfully from Course {course.Name} \n");
@@ -233,7 +227,6 @@ namespace School_Management.Services
                     Console.WriteLine("Courses data file not found, Starting with empty list.");
                     return new List<Course>();
                 }
-
 
                 using var stream = File.OpenRead(filePath);
                 var courses = JsonSerializer.Deserialize<List<Course>>(stream);

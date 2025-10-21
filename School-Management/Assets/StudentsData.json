@@ -1,36 +1,37 @@
 [
   {
-    "Id": 0,
+    "Id": "ed7d01bc-468a-4c91-aa7e-3edd5e771118",
     "FirstName": "Ahmad",
-    "LastName": "Mohammad",
-    "BirthDate": "2009-09-15",
+    "LastName": "Khaled",
+    "BirthDate": "2018-10-29",
     "Address": "Damascus",
-    "CourseId": 0,
+    "CourseId": "ec29795c-d799-4550-8f25-60fd16bd6eef",
     "Grades": {
       "Calculus 1": -1,
       "Calculus 2": -1,
+      "Calculus Advanced": -1,
       "Algebra 1": -1,
       "Algebra 2": -1,
-      "Linear Algebra": -1,
-      "Calculus Advanced": -1,
-      "Complex Numbers": -1
+      "Complex Numbers": -1,
+      "Integral": -1,
+      "Integral Advanced": -1
     }
   },
   {
-    "Id": 1,
-    "FirstName": "yhgfg",
-    "LastName": "asdfg",
-    "BirthDate": "2012-04-06",
-    "Address": "fgdhs",
-    "CourseId": 1,
+    "Id": "6b489a6c-621b-4d1e-92f0-a2e8c7991530",
+    "FirstName": "Sameer",
+    "LastName": "Saleh",
+    "BirthDate": "2019-08-12",
+    "Address": "Homs",
+    "CourseId": "3842446c-a648-4abb-bf91-7df8de5dcf34",
     "Grades": {
-      "History of Philosophy": -1,
-      "Before Socrates": -1,
-      "Post Socrates": -1,
-      "Stocism": -1,
-      "Existenism": -1,
-      "Marxisismm": -1,
-      "Feminisism": -1
+      "Fundamentals Of Programming C\u002B\u002B": -1,
+      "OOP Java": -1,
+      "Programming Languages": -1,
+      "Web Fundamentals": -1,
+      "Software Building": -1,
+      "Testing": -1,
+      "Deploying ": -1
     }
   }
 ]

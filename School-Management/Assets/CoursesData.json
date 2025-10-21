@@ -1,104 +1,133 @@
 [
   {
-    "Id": 0,
+    "Id": "ec29795c-d799-4550-8f25-60fd16bd6eef",
     "Name": "Maths",
     "Subjects": [
       {
-        "Id": 0,
+        "Id": "9f0dc892-9623-4411-96e7-22955ea2dafa",
         "Name": "Calculus 1",
-        "CourseId": 0
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
       },
       {
-        "Id": 1,
+        "Id": "2bf4a751-8de2-4345-a557-6f95f0d6ccbc",
         "Name": "Calculus 2",
-        "CourseId": 0
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
       },
       {
-        "Id": 2,
-        "Name": "Algebra 1",
-        "CourseId": 0
-      },
-      {
-        "Id": 3,
-        "Name": "Algebra 2",
-        "CourseId": 0
-      },
-      {
-        "Id": 4,
-        "Name": "Linear Algebra",
-        "CourseId": 0
-      },
-      {
-        "Id": 5,
+        "Id": "39c9e3d1-bc64-4ffe-954c-f830e4092b1e",
         "Name": "Calculus Advanced",
-        "CourseId": 0
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
       },
       {
-        "Id": 6,
+        "Id": "8c60700f-00c7-4a2a-9021-2de4b7339ea6",
+        "Name": "Algebra 1",
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
+      },
+      {
+        "Id": "dce27b78-0c85-44b4-8cb1-6886d35cc60b",
+        "Name": "Algebra 2",
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
+      },
+      {
+        "Id": "72f383f0-d6d2-4fcf-9b69-ec0fe181ba7a",
         "Name": "Complex Numbers",
-        "CourseId": 0
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
+      },
+      {
+        "Id": "0693d681-88b5-43d8-9c11-1165e64e01ce",
+        "Name": "Integral",
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
+      },
+      {
+        "Id": "6b13112d-6116-4551-a213-4a2201f702c4",
+        "Name": "Integral Advanced",
+        "CourseId": "d8cb6f9f-7e08-4a15-811e-e5765547e78f"
+      },
+      {
+        "Id": "ae9039c3-3945-4a42-82f1-747d8946c470",
+        "Name": "Equations",
+        "CourseId": "ec29795c-d799-4550-8f25-60fd16bd6eef"
       }
     ],
     "Students": [
       {
-        "Id": 0,
-        "FirstName": "fgnjoou",
-        "LastName": "ahbhbi",
-        "BirthDate": "2019-07-03",
-        "Address": "sghllkd",
-        "CourseId": 0,
+        "Id": "ed7d01bc-468a-4c91-aa7e-3edd5e771118",
+        "FirstName": "Ahmad",
+        "LastName": "Khaled",
+        "BirthDate": "2018-10-29",
+        "Address": "Damascus",
+        "CourseId": "ec29795c-d799-4550-8f25-60fd16bd6eef",
         "Grades": {
           "Calculus 1": -1,
           "Calculus 2": -1,
+          "Calculus Advanced": -1,
           "Algebra 1": -1,
           "Algebra 2": -1,
-          "Linear Algebra": -1,
-          "Calculus Advanced": -1,
-          "Complex Numbers": -1
+          "Complex Numbers": -1,
+          "Integral": -1,
+          "Integral Advanced": -1
         }
       }
     ]
   },
   {
-    "Id": 1,
-    "Name": "Philosophy",
+    "Id": "3842446c-a648-4abb-bf91-7df8de5dcf34",
+    "Name": "Programming",
     "Subjects": [
       {
-        "Id": 0,
-        "Name": "History of Philosophy",
-        "CourseId": 1
+        "Id": "fa8b6638-fb5c-49bd-8903-c04525c3d7f7",
+        "Name": "Fundamentals Of Programming C\u002B\u002B",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       },
       {
-        "Id": 1,
-        "Name": "Before Socrates",
-        "CourseId": 1
+        "Id": "627eb8a6-95c4-44ba-8072-a5cb00a16826",
+        "Name": "OOP Java",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       },
       {
-        "Id": 2,
-        "Name": "Post Socrates",
-        "CourseId": 1
+        "Id": "1bfe7a66-d109-4a19-9eb2-77a126b05cf1",
+        "Name": "Programming Languages",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       },
       {
-        "Id": 3,
-        "Name": "Stocism",
-        "CourseId": 1
+        "Id": "6bf4ac4d-c007-4fe7-a7a1-6f1e3ef1ad6b",
+        "Name": "Web Fundamentals",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       },
       {
-        "Id": 4,
-        "Name": "Existenism",
-        "CourseId": 1
+        "Id": "2a241cd4-fb5c-4801-b48b-066e9c370ac1",
+        "Name": "Software Building",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       },
       {
-        "Id": 5,
-        "Name": "Marxisismm",
-        "CourseId": 1
+        "Id": "d5fb3fa6-ff16-4e2e-940d-cec171fec78c",
+        "Name": "Testing",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       },
       {
-        "Id": 6,
-        "Name": "Feminisism",
-        "CourseId": 1
+        "Id": "9e0a486d-2f5a-4b4e-8f7f-f6dc74215a73",
+        "Name": "Deploying ",
+        "CourseId": "fc2ccf56-aabf-4d57-9260-2859078e877b"
       }
     ],
-    "Students": []
+    "Students": [
+      {
+        "Id": "6b489a6c-621b-4d1e-92f0-a2e8c7991530",
+        "FirstName": "Sameer",
+        "LastName": "Saleh",
+        "BirthDate": "2019-08-12",
+        "Address": "Homs",
+        "CourseId": "3842446c-a648-4abb-bf91-7df8de5dcf34",
+        "Grades": {
+          "Fundamentals Of Programming C\u002B\u002B": -1,
+          "OOP Java": -1,
+          "Programming Languages": -1,
+          "Web Fundamentals": -1,
+          "Software Building": -1,
+          "Testing": -1,
+          "Deploying ": -1
+        }
+      }
+    ]
   }
 ]

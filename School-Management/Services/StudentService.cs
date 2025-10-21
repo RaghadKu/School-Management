@@ -37,9 +37,9 @@ namespace School_Management.Services
             }
         }
 
-        public void Get(int Id)
+        public void Get(Guid Id)
         {
-            Student student = Students.FirstOrDefault(s => s.Id == Id);
+            Student student = Students.FirstOrDefault(s => s.Id.Equals(Id));
 
             if(student != null)
             {
@@ -52,9 +52,9 @@ namespace School_Management.Services
             }
         }
 
-        public void Update(Student updatedStudent, int Id)
+        public void Update(Student updatedStudent, Guid Id)
         {
-            var student = Students.FirstOrDefault(s => s.Id == Id);
+            var student = Students.FirstOrDefault(s => s.Id.Equals(Id));
 
             if (student != null)
             {
@@ -76,9 +76,9 @@ namespace School_Management.Services
             
         }
 
-        public void Delete(int Id)
+        public void Delete(Guid Id)
         {
-            var student = Students.FirstOrDefault(s => s.Id == Id);
+            var student = Students.FirstOrDefault(s => s.Id.Equals(Id));
 
             if (student != null)
             {
